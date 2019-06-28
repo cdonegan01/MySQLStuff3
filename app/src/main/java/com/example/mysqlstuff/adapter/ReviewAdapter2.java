@@ -48,7 +48,7 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
         myViewHolder.gameNameTextView.setText(mData.get(i).getGameName());
         myViewHolder.ratingTextView.setText(mData.get(i).getRating()+"/10");
         myViewHolder.reviewTextView.setText(mData.get(i).getReview());
-        Glide.with(mContext).load(mData.get(i).getAuthorPictureUrl()).apply(options).into(myViewHolder.profilePicture);
+        Glide.with(mContext).load(mData.get(i).getGamePictureUrl()).apply(options).into(myViewHolder.gamePicture);
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +80,7 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
         TextView gameNameTextView;
         TextView ratingTextView;
         TextView reviewTextView;
-        ImageView profilePicture;
+        ImageView gamePicture;
         LinearLayout view_container;
 
         public MyViewHolder (View itemView) {
@@ -90,7 +90,7 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
             gameNameTextView = itemView.findViewById(R.id.gameNameUser);
             reviewTextView = itemView.findViewById(R.id.reviewUser);
             ratingTextView = itemView.findViewById(R.id.ratingUserReview);
-            profilePicture = itemView.findViewById(R.id.thumbnailUserReview);
+            gamePicture = itemView.findViewById(R.id.thumbnailUserReview);
 
         }
     }

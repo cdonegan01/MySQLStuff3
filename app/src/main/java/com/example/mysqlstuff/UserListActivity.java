@@ -48,6 +48,7 @@ public class UserListActivity extends AppCompatActivity {
                     try {
                         jsonObject = response.getJSONObject(i);
                         otherUser otherUser = new otherUser();
+                        otherUser.setOtherUserId(jsonObject.getInt("user_id"));
                         otherUser.setOtherEmail(jsonObject.getString("Email"));
                         otherUser.setOtherUsername(jsonObject.getString("Username"));
                         otherUser.setOtherName(jsonObject.getString("Name"));

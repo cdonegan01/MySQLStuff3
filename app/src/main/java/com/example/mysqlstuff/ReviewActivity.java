@@ -16,38 +16,34 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        String name  = getIntent().getExtras().getString("title");
-        String description = getIntent().getExtras().getString("description");
-        String studio = getIntent().getExtras().getString("developer") ;
-        String category = getIntent().getExtras().getString("release_year");
-        String rating = getIntent().getExtras().getString("average_rating");
-        String image_url = getIntent().getExtras().getString("cover_art");
+        String gameTitle  = getIntent().getExtras().getString("gameTitle");
+        String review = getIntent().getExtras().getString("review");
+        String authorName = getIntent().getExtras().getString("authorName");
+        String rating = getIntent().getExtras().getString("rating"+"/10");
+        String image_url = getIntent().getExtras().getString("authorPicture");
+        String gameImage = getIntent().getExtras().getString("gamePicture");
+        String likes = getIntent().getExtras().getString("likes")+" Likes";
+
 
         int gameId = getIntent().getExtras().getInt("id");
 
-        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingtoolbar_id);
-        collapsingToolbarLayout.setTitleEnabled(true);
+        TextView tv_name = findViewById(R.id.gameTitleID);
+        TextView tv_authorName = findViewById(R.id.authorNameID) ;
+        TextView tv_review = findViewById(R.id.reviewText);
+        TextView tv_rating  = findViewById(R.id.score);
+        TextView tv_likes = findViewById(R.id.likeCounterID);
+        ImageView profilePicImg = findViewById(R.id.reviewAuthorProfilePicID);
+        ImageView gamePicImg = findViewById(R.id.thumbnailUserReview);
 
-        TextView tv_name = findViewById(R.id.aa_title);
-        TextView tv_developer = findViewById(R.id.aa_developer);
-        TextView tv_releaseYear = findViewById(R.id.aa_release_year) ;
-        TextView tv_description = findViewById(R.id.aa_description);
-        TextView tv_rating  = findViewById(R.id.aa_rating) ;
-        ImageView img = findViewById(R.id.aa_thumbnail);
-
-        tv_name.setText(name);
-        tv_releaseYear.setText(category);
-        tv_description.setText(description);
+        tv_name.setText(gameTitle);
+        tv_authorName.setText(authorName);
+        tv_review.setText(review);
         tv_rating.setText(rating);
-        tv_developer.setText(studio);
-
-        collapsingToolbarLayout.setTitle(name);
-
+        tv_likes.setText(likes);
 
         RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
-
-
         // set image using Glide
-        Glide.with(this).load(image_url).apply(requestOptions).into(img);
+        Glide.with(this).load(image_url).apply(requestOptions).into(profilePicImg);
+        Glide.with(this).load(gameImage).apply(requestOptions).into(gamePicImg);
     }
 }

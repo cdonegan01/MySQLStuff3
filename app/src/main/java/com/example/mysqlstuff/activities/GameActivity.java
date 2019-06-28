@@ -40,7 +40,7 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList1.php";
+    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> lstReviews;
@@ -103,12 +103,15 @@ public class GameActivity extends AppCompatActivity {
                         if (jsonObject.getInt("Game") == gameid)  {
                             Review review = new Review();
                             review.setReviewId(jsonObject.getInt("Review_id"));
+                            review.setGameName(jsonObject.getString("title"));
                             review.setAuthorName(jsonObject.getString("Username"));
                             review.setAuthorPictureUrl(jsonObject.getString("Avatar"));
+                            review.setGamePictureUrl(jsonObject.getString("cover_art"));
                             review.setLikes(jsonObject.getInt("Likes"));
                             review.setRating(jsonObject.getInt("Rating"));
                             review.setReview(jsonObject.getString("Review"));
-                            review.setAuthorId(jsonObject.getInt("id"));
+                            review.setAuthorId(jsonObject.getInt("user_id"));
+                            review.setGameId(jsonObject.getInt("id"));
                             lstReviews.add(review);
                         }
                     }
