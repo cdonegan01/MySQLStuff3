@@ -29,16 +29,16 @@
 
     <TextView
         android:id="@+id/otherUserBio"
-        android:layout_width="242dp"
-        android:layout_height="178dp"
+        android:layout_width="203dp"
+        android:layout_height="176dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="this user has yet to write a bio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toEndOf="@+id/otherUserProfile"
         app:layout_constraintTop_toTopOf="parent" />
 

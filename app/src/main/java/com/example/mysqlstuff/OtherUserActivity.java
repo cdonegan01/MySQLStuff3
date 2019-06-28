@@ -49,9 +49,7 @@ public class OtherUserActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user);
 
-        getSupportActionBar().hide();
 
-        int idNo = getIntent().getExtras().getInt("otherUserId");
         String name  = getIntent().getExtras().getString("otherUsername");
         String bio = getIntent().getExtras().getString("otherBio");
         String reviewTitle = "Reviews by "+name;
@@ -74,24 +72,26 @@ public class OtherUserActivity  extends AppCompatActivity {
     }
 
     private void jsoncall() {
+        final int idNo = getIntent().getExtras().getInt("otherUserId");
         ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 JSONObject jsonObject = null;
                 for (int i = 0 ; i<response.length();i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        Review review = new Review();
-                        review.setReviewId(jsonObject.getInt("Review_id"));
-                        review.setGameName(jsonObject.getString("title"));
-                        review.setGamePictureUrl(jsonObject.getString("cover_art"));
-                        review.setLikes(jsonObject.getInt("Likes"));
-                        review.setRating(jsonObject.getInt("Rating"));
-                        review.setReview(jsonObject.getString("Review"));
-                        review.setGameId(jsonObject.getInt("id"));
-                        review.setAuthorId(jsonObject.getInt("Author"));
-                        lstReviews.add(review);
+                        if (jsonObject.getInt("Author") == idNo) {
+                            Review review = new Review();
+                            review.setReviewId(jsonObject.getInt("Review_id"));
+                            review.setGameName(jsonObject.getString("title"));
+                            review.setGamePictureUrl(jsonObject.getString("cover_art"));
+                            review.setLikes(jsonObject.getInt("Likes"));
+                            review.setRating(jsonObject.getInt("Rating"));
+                            review.setReview(jsonObject.getString("Review"));
+                            review.setGameId(jsonObject.getInt("id"));
+                            review.setAuthorId(jsonObject.getInt("Author"));
+                            lstReviews.add(review);
+                        }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();

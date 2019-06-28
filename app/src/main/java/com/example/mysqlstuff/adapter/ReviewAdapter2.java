@@ -89,8 +89,8 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
             view_container = itemView.findViewById(R.id.container);
             gameNameTextView = itemView.findViewById(R.id.gameNameUser);
             reviewTextView = itemView.findViewById(R.id.reviewUser);
-            ratingTextView = itemView.findViewById(R.id.ratingGameReview);
-            profilePicture = itemView.findViewById(R.id.profilePictureGameReview);
+            ratingTextView = itemView.findViewById(R.id.ratingUserReview);
+            profilePicture = itemView.findViewById(R.id.thumbnailUserReview);
 
         }
     }

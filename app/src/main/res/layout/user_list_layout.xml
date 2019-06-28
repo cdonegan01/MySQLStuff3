@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/profilePicture"
-        android:layout_width="52dp"
-        android:layout_height="60dp"
+        android:layout_width="74dp"
+        android:layout_height="67dp"
         android:scaleType="centerCrop"
         android:src="@drawable/loading" />
 

@@ -51,7 +51,7 @@
         <TextView
             android:id="@+id/reviewUser"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:text="Review text here" />
 
 
