@@ -19,7 +19,7 @@ public class ReviewActivity extends AppCompatActivity {
         String gameTitle  = getIntent().getExtras().getString("gameTitle");
         String review = getIntent().getExtras().getString("review");
         String authorName = getIntent().getExtras().getString("authorName");
-        String rating = getIntent().getExtras().getString("rating"+"/10");
+        String rating = getIntent().getExtras().getString("rating");
         String image_url = getIntent().getExtras().getString("authorPicture");
         String gameImage = getIntent().getExtras().getString("gamePicture");
         String likes = getIntent().getExtras().getString("likes")+" Likes";
@@ -33,12 +33,12 @@ public class ReviewActivity extends AppCompatActivity {
         TextView tv_rating  = findViewById(R.id.score);
         TextView tv_likes = findViewById(R.id.likeCounterID);
         ImageView profilePicImg = findViewById(R.id.reviewAuthorProfilePicID);
-        ImageView gamePicImg = findViewById(R.id.thumbnailUserReview);
+        ImageView gamePicImg = findViewById(R.id.gameThumbnailImageID);
 
         tv_name.setText(gameTitle);
         tv_authorName.setText(authorName);
         tv_review.setText(review);
-        tv_rating.setText(rating);
+        tv_rating.setText(rating+"/10");
         tv_likes.setText(likes);
 
         RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);

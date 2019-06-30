@@ -8,11 +8,11 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="402dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score">
 
@@ -54,8 +54,8 @@
 
     <TextView
         android:id="@+id/gameTitleID"
-        android:layout_width="280dp"
-        android:layout_height="35dp"
+        android:layout_width="254dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
@@ -79,22 +79,12 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginEnd="252dp"
-        android:layout_marginRight="252dp"
         android:text="0/10"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/gameThumbnailImageID"
-        app:layout_constraintTop_toBottomOf="@+id/gameTitleID" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/commendsRvID"
-        android:layout_width="395dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/gameTitleID" />
 
     <ImageView
         android:id="@+id/likeButtonID"
@@ -130,5 +120,32 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/likeCounterID" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="395dp"
+        android:layout_height="477dp"
+        android:layout_marginTop="8dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentTextView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/commendsRvID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentTextView" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.constraint.ConstraintLayout>

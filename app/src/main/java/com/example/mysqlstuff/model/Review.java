@@ -6,17 +6,17 @@ public class Review {
     private String gameName;
     private String authorName;
     private String authorPictureUrl;
-    private int rating;
+    private String rating;
     private String review;
     private String gamePictureUrl;
-    private int likes;
+    private String likes;
     private int authorId;
     private int gameId;
 
     public Review() {
     }
 
-    public Review(int reviewId, String gameName, String authorName, String authorPictureUrl, int rating, String review, String gamePictureUrl, int likes, int authorId, int gameId) {
+    public Review(int reviewId, String gameName, String authorName, String authorPictureUrl, String rating, String review, String gamePictureUrl, String likes, int authorId, int gameId) {
         this.reviewId = reviewId;
         this.gameName = gameName;
         this.authorName = authorName;
@@ -61,11 +61,11 @@ public class Review {
         this.authorPictureUrl = authorPictureUrl;
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -85,11 +85,11 @@ public class Review {
         this.gamePictureUrl = gamePictureUrl;
     }
 
-    public int getLikes() {
+    public String getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(String likes) {
         this.likes = likes;
     }
 

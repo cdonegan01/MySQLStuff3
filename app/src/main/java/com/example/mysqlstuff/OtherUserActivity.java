@@ -88,8 +88,8 @@ public class OtherUserActivity  extends AppCompatActivity {
                             review.setAuthorName(jsonObject.getString("Username"));
                             review.setAuthorPictureUrl(jsonObject.getString("Avatar"));
                             review.setGamePictureUrl(jsonObject.getString("cover_art"));
-                            review.setLikes(jsonObject.getInt("Likes"));
-                            review.setRating(jsonObject.getInt("Rating"));
+                            review.setLikes(jsonObject.getString("Likes"));
+                            review.setRating(jsonObject.getString("Rating"));
                             review.setReview(jsonObject.getString("Review"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
