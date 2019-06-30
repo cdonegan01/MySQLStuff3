@@ -86,8 +86,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
             view_container = itemView.findViewById(R.id.container);
             nameTextView = itemView.findViewById(R.id.nameTextView);
-            followerTextView = itemView.findViewById(R.id.followerTextView);
-            profilePicture = itemView.findViewById(R.id.profilePicture);
+            followerTextView = itemView.findViewById(R.id.commentTextView);
+            profilePicture = itemView.findViewById(R.id.commentProfilePicture);
 
         }
     }

@@ -12,7 +12,7 @@
     >
 
     <ImageView
-        android:id="@+id/profilePicture"
+        android:id="@+id/commentProfilePicture"
         android:layout_width="74dp"
         android:layout_height="67dp"
         android:scaleType="centerCrop"
@@ -34,7 +34,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/followerTextView"
+            android:id="@+id/commentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10 Followers" />

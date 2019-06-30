@@ -1,4 +1,4 @@
-package com.example.mysqlstuff.activities;
+package com.example.mysqlstuff;
 
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,20 +15,19 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mysqlstuff.GameListActivity;
-import com.example.mysqlstuff.R;
+import com.example.mysqlstuff.activities.GameActivity;
 import com.example.mysqlstuff.adapter.ReviewAdapter1;
-import com.example.mysqlstuff.adapter.RvAdapter;
-import com.example.mysqlstuff.model.Game;
+import com.example.mysqlstuff.adapter.ReviewAdapter3;
 import com.example.mysqlstuff.model.Review;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+public class ActivityFeed extends AppCompatActivity {
 
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private JsonArrayRequest ArrayRequest ;
@@ -39,9 +38,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-
-        getSupportActionBar().hide();
+        setContentView(R.layout.activity_feed);
 
         String name  = getIntent().getExtras().getString("title");
         String description = getIntent().getExtras().getString("description");
@@ -117,12 +114,12 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
-        requestQueue = Volley.newRequestQueue(GameActivity.this);
+        requestQueue = Volley.newRequestQueue(ActivityFeed.this);
         requestQueue.add(ArrayRequest);
     }
 
     public void setRvadapter (List<Review> lstReviews) {
-        ReviewAdapter1 myAdapter = new ReviewAdapter1(this,lstReviews) ;
+        ReviewAdapter3 myAdapter = new ReviewAdapter3(this,lstReviews) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 

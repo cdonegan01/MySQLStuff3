@@ -45,9 +45,9 @@ public class ReviewAdapter1 extends RecyclerView.Adapter<ReviewAdapter1.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.authorTextView.setText(mData.get(i).getAuthorName());
+        myViewHolder.usernameTextView.setText(mData.get(i).getAuthorName());
         myViewHolder.ratingTextView.setText(mData.get(i).getRating()+"/10");
-        myViewHolder.reviewTextView.setText(mData.get(i).getReview());
+        myViewHolder.commentTextView.setText(mData.get(i).getReview());
         Glide.with(mContext).load(mData.get(i).getAuthorPictureUrl()).apply(options).into(myViewHolder.profilePicture);
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -77,9 +77,9 @@ public class ReviewAdapter1 extends RecyclerView.Adapter<ReviewAdapter1.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView authorTextView;
+        TextView usernameTextView;
         TextView ratingTextView;
-        TextView reviewTextView;
+        TextView commentTextView;
         ImageView profilePicture;
         LinearLayout view_container;
 
@@ -87,8 +87,8 @@ public class ReviewAdapter1 extends RecyclerView.Adapter<ReviewAdapter1.MyViewHo
             super(itemView);
 
             view_container = itemView.findViewById(R.id.container);
-            authorTextView = itemView.findViewById(R.id.gameNameUser);
-            reviewTextView = itemView.findViewById(R.id.reviewUser);
+            usernameTextView = itemView.findViewById(R.id.gameNameUser);
+            commentTextView = itemView.findViewById(R.id.reviewUser);
             ratingTextView = itemView.findViewById(R.id.ratingGameReview);
             profilePicture = itemView.findViewById(R.id.profilePictureGameReview);
 

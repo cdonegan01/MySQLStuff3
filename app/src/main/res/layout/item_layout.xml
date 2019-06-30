@@ -15,12 +15,12 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="193dp"
         android:layout_marginRight="193dp"
-        android:layout_toStartOf="@+id/followerTextView"
-        android:layout_toLeftOf="@+id/followerTextView"
+        android:layout_toStartOf="@+id/commentTextView"
+        android:layout_toLeftOf="@+id/commentTextView"
         android:text="Name" />
 
     <TextView
-        android:id="@+id/followerTextView"
+        android:id="@+id/commentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
