@@ -1,4 +1,4 @@
-package com.example.mysqlstuff.model;
+package com.example.mysqlstuff.objects;
 
 public class Game {
 

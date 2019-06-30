@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.R;
-import com.example.mysqlstuff.model.Comment;
+import com.example.mysqlstuff.objects.Comment;
 
 import java.util.List;
 

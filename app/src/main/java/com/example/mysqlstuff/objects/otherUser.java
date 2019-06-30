@@ -1,6 +1,4 @@
-package com.example.mysqlstuff.model;
-
-import java.util.Date;
+package com.example.mysqlstuff.objects;
 
 public class otherUser {
 

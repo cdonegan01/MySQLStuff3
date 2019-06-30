@@ -15,10 +15,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mysqlstuff.activities.GameActivity;
-import com.example.mysqlstuff.adapter.ReviewAdapter1;
 import com.example.mysqlstuff.adapter.ReviewAdapter3;
-import com.example.mysqlstuff.model.Review;
+import com.example.mysqlstuff.objects.Review;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.R;
 import com.example.mysqlstuff.ReviewActivity;
-import com.example.mysqlstuff.model.Review;
+import com.example.mysqlstuff.objects.Review;
 
 import java.util.List;
 

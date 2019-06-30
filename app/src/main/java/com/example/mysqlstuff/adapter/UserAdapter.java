@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.OtherUserActivity;
 import com.example.mysqlstuff.R;
-import com.example.mysqlstuff.model.otherUser;
+import com.example.mysqlstuff.objects.otherUser;
 
 import java.util.List;
 

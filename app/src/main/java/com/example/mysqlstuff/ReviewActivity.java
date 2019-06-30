@@ -1,6 +1,5 @@
 package com.example.mysqlstuff;
 
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +14,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mysqlstuff.activities.GameActivity;
 import com.example.mysqlstuff.adapter.CommentAdapter;
-import com.example.mysqlstuff.adapter.ReviewAdapter1;
-import com.example.mysqlstuff.model.Comment;
-import com.example.mysqlstuff.model.Review;
+import com.example.mysqlstuff.objects.Comment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
