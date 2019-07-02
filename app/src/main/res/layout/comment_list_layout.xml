@@ -12,7 +12,7 @@
     android:padding="8dp">
 
     <LinearLayout
-        android:layout_width="83dp"
+        android:layout_width="109dp"
         android:layout_height="85dp"
         android:orientation="vertical">
 
@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/commentProfilePicture"
-                android:layout_width="47dp"
+                android:layout_width="52dp"
                 android:layout_height="41dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/loading" />
@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="304dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="vertical">

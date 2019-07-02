@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
+    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/commentList.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Comment> lstComments;
@@ -67,10 +67,12 @@ public class ReviewActivity extends AppCompatActivity {
         lstComments = new ArrayList<>();
         recyclerView = findViewById(R.id.commendsRvID);
 
+        jsoncall();
+
     }
 
     private void jsoncall() {
-        final int reviewID = getIntent().getExtras().getInt("");
+        final int reviewID = getIntent().getExtras().getInt("reviewId");
         ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -80,9 +82,10 @@ public class ReviewActivity extends AppCompatActivity {
                         jsonObject = response.getJSONObject(i);
                         if (jsonObject.getInt("Review") == reviewID)  {
                             Comment comment = new Comment();
-                            comment.setComment(jsonObject.getString("comment"));
-                            comment.setUserAvatarURL(jsonObject.getString(""));
-                            comment.setUserName(jsonObject.getString(""));
+                            comment.setComment(jsonObject.getString("Comment"));
+                            comment.setUserAvatarURL(jsonObject.getString("Avatar"));
+                            comment.setUserName(jsonObject.getString("Username"));
+                            comment.setUserID(jsonObject.getString("user_id"));
                             lstComments.add(comment);
                         }
                     }

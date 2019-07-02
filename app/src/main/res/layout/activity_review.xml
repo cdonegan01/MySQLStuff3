@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ReviewActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/commendsRvID"
+        android:layout_width="335dp"
+        android:layout_height="194dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentTextView" />
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="330dp"
@@ -120,32 +130,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/likeCounterID" />
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="395dp"
-        android:layout_height="477dp"
-        android:layout_marginTop="8dp"
-        android:fillViewport="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentTextView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/commendsRvID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/commentTextView" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.constraint.ConstraintLayout>

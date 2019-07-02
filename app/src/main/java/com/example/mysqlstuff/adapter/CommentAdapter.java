@@ -64,9 +64,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 super(itemView);
 
                 view_container = itemView.findViewById(R.id.container);
-                usernameTextView = itemView.findViewById(R.id.gameNameUser);
-                commentTextView = itemView.findViewById(R.id.reviewUser);
-                gameThumbnail = itemView.findViewById(R.id.profilePictureGameReview);
+                usernameTextView = itemView.findViewById(R.id.commentUsernameID);
+                commentTextView = itemView.findViewById(R.id.commentTextView);
+                gameThumbnail = itemView.findViewById(R.id.commentProfilePicture);
 
             }
         }
