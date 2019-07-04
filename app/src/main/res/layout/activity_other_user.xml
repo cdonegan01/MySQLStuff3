@@ -2,9 +2,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraingLayoutOtherUser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserPageActivity">
+    tools:context=".OtherUserActivity">
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:onClick="goToUserReviews"
+        android:text="View All Reviews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView3" />
 
     <ImageView
         android:id="@+id/otherUserProfile"
@@ -95,15 +107,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/otherReviewsTitle" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View All Reviews"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView3" />
 
 </android.support.constraint.ConstraintLayout>

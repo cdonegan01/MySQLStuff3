@@ -1,9 +1,14 @@
 package com.example.mysqlstuff;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OtherUserActivity  extends AppCompatActivity {
+public class OtherUserActivity  extends AppCompatActivity implements View.OnClickListener {
 
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private JsonArrayRequest ArrayRequest ;
@@ -54,6 +59,9 @@ public class OtherUserActivity  extends AppCompatActivity {
         otherReviewsTitle.setText(reviewTitle);
         RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
         Glide.with(this).load(image_url).apply(requestOptions).into(otherUserProfile);
+
+        ConstraintLayout constraintLayout1 = findViewById(R.id.constraingLayoutOtherUser);
+        constraintLayout1.setOnClickListener(this);
 
         lstReviews = new ArrayList<>();
         recyclerView = findViewById(R.id.otherUserReviews);
@@ -105,5 +113,30 @@ public class OtherUserActivity  extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 
+    }
+
+    public void goToUserReviews(View view) {
+        Intent intent = new Intent(this, UserReviewsActivity.class);
+        String name  = getIntent().getExtras().getString("otherUsername");
+        int authorID = getIntent().getExtras().getInt("author");
+        intent.putExtra("otherUsername", name);
+        intent.putExtra("author", authorID);
+        startActivity(intent);
+    }
+
+    public void goToUserList(View view) {
+        Intent intent = new Intent(this, UserListActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClick(View view) {
+        if (view.getId() == R.id.constraingLayoutOtherUser) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
     }
 }
