@@ -43,15 +43,15 @@
 
         <TextView
             android:id="@+id/ratingUserReview"
-            android:layout_width="241dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:text="10/10"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/reviewUser"
-            android:layout_width="241dp"
-            android:layout_height="74dp"
+            android:layout_width="224dp"
+            android:layout_height="75dp"
             android:text="Review text here" />
 
 

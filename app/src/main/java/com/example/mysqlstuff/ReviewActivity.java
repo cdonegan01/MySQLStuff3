@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,9 @@ public class ReviewActivity extends AppCompatActivity {
         tv_name.setText(gameTitle);
         tv_authorName.setText(authorName);
         tv_review.setText(review);
+
+        tv_review.setMovementMethod(new ScrollingMovementMethod());
+
         tv_rating.setText(rating+"/10");
         tv_likes.setText(likes);
 

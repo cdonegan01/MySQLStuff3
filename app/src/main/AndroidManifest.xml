@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserReviewsActivity"></activity>
+        <activity android:name=".AddReviewActivity"></activity>
+        <activity android:name=".UserReviewsActivity" />
         <activity android:name=".ActivityFeed" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".UserPageActivity" />
