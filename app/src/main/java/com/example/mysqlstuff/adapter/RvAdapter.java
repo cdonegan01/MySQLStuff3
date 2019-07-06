@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mysqlstuff.activities.GameActivity;
+import com.example.mysqlstuff.GameActivity;
 import com.example.mysqlstuff.objects.Game;
 import com.example.mysqlstuff.R;
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GameActivity">
+    tools:context=".GameActivity">
 
     <android.support.design.widget.AppBarLayout
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -103,6 +103,7 @@
         android:id="@+id/nestedScrollView">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/innerConstraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -144,6 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
+                android:onClick="goToAddPage"
                 android:text="ADD A REVIEW"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"

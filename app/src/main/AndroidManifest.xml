@@ -16,7 +16,7 @@
         <activity android:name=".ActivityFeed" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".UserPageActivity" />
-        <activity android:name=".activities.GameActivity" />
+        <activity android:name=".GameActivity" />
         <activity android:name=".GameListActivity" />
         <activity android:name=".UserListActivity" />
         <activity android:name=".RegisterActivity" />
