@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Already Registered?"
+        android:text="Not yet Registered? Tap below!"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintTop_toBottomOf="@+id/login"

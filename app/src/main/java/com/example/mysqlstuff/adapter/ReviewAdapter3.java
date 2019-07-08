@@ -34,16 +34,16 @@ public class ReviewAdapter3 extends RecyclerView.Adapter<ReviewAdapter3.MyViewHo
 
     @NonNull
     @Override
-    public ReviewAdapter3.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        view = inflater.inflate(R.layout.activity_feed,viewGroup, false);
+        view = inflater.inflate(R.layout.review_list_feed_layout,viewGroup, false);
         final ReviewAdapter3.MyViewHolder viewHolder = new ReviewAdapter3.MyViewHolder(view);
         return new ReviewAdapter3.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ReviewAdapter3.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
         myViewHolder.feedNameAndGame.setText(mData.get(i).getGameName()+" review by "+mData.get(i).getAuthorName());
         myViewHolder.feedRating.setText(mData.get(i).getRating()+"/10");

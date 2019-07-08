@@ -32,8 +32,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/activityFeedRVId"
-        android:layout_width="395dp"
-        android:layout_height="626dp"
+        android:layout_width="362dp"
+        android:layout_height="629dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
