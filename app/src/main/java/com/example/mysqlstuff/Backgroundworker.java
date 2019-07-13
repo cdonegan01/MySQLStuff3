@@ -27,7 +27,7 @@ public class Backgroundworker extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/login.php";
+        String login_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/login3.php";
         String register_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/register.php";
         if(type.equals("login")) {
             try {
@@ -54,7 +54,7 @@ public class Backgroundworker extends AsyncTask<String, String, String> {
                     result += line;
                 }
                 if (result!= null) {
-                    Intent intent = new Intent("com.example.mysqlstuff.UserListActivity");
+
                 }
                 bufferedReader.close();
                 inputStream.close();

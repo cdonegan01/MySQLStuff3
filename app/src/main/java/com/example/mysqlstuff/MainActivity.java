@@ -5,33 +5,39 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mysqlstuff.objects.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
 
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
-    private static final String KEY_EMAIL = "email";
+    private static final String KEY_FULL_NAME = "email";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMPTY = "";
-
-    private EditText UsernameEt, PasswordEt;
-
-    private String username, password;
-
+    private EditText UsernameEt;
+    private EditText PasswordEt;
+    private String username;
+    private String password;
     private ProgressDialog pDialog;
     private String login_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/login2.php";
     private Session session;
@@ -54,15 +60,25 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
 
         ConstraintLayout constraintLayout1 = (ConstraintLayout) findViewById(R.id.constraintLayout1);
 
+        Button login = findViewById(R.id.login);
+
         constraintLayout1.setOnClickListener(this);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Retrieve the data entered in the edit texts
+                username = UsernameEt.getText().toString();
+                password = PasswordEt.getText().toString();
+                if (validateInputs()) {
+                    login();
+                }
+            }
+        });
     }
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
-        String transferUsername = UsernameEt.getText().toString();
-        String transferPassword = PasswordEt.getText().toString();
-        intent.putExtra("EX_USER", transferUsername);
-        intent.putExtra("EX_PASS", transferPassword);
         startActivity(intent);
 
     }
@@ -77,7 +93,30 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         startActivity(intent);
     }
 
-    public void OnLogin(View view) {
+    /**
+     * Launch Dashboard Activity on Successful Login
+     */
+    private void loadDashboard() {
+        Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
+        startActivity(i);
+        finish();
+
+    }
+
+    /**
+     * Display Progress bar while Logging in
+     */
+
+    private void displayLoader() {
+        pDialog = new ProgressDialog(MainActivity.this);
+        pDialog.setMessage("Logging In.. Please wait...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+    }
+
+    private void login() {
         displayLoader();
         JSONObject request = new JSONObject();
         try {
@@ -97,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                             //Check if user got logged in successfully
 
                             if (response.getInt(KEY_STATUS) == 0) {
-                                session.loginUser(username,response.getString(KEY_EMAIL));
+                                session.loginUser(username,response.getString(KEY_FULL_NAME));
                                 loadDashboard();
 
                             }else{
@@ -126,35 +165,10 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
 
-    public void onClick(View view) {
-        if (view.getId() == R.id.constraintLayout1) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-            OnLogin(v);
-        }
-        return false;
-    }
-
-    private void loadDashboard() {
-        Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
-        startActivity(i);
-        finish();
-    }
-
-    private void displayLoader() {
-        pDialog = new ProgressDialog(MainActivity.this);
-        pDialog.setMessage("Logging In.. Please wait...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
-    }
-
+    /**
+     * Validates inputs and shows error if any
+     * @return
+     */
     private boolean validateInputs() {
         if(KEY_EMPTY.equals(username)){
             UsernameEt.setError("Username cannot be empty");
@@ -170,4 +184,13 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
     }
 
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+        return false;
+    }
 }

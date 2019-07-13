@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_activity"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Activity Feed" />
+        <item
+            android:id="@+id/nav_userPage"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="My User Page" />
+        <item
+            android:id="@+id/nav_gameSearch"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="Game Search" />
+        <item
+            android:id="@+id/nav_userSearch"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="User Search" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Log Out" />
+    </group>
+
+</menu>

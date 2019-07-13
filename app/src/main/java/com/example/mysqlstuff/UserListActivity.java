@@ -1,10 +1,14 @@
 package com.example.mysqlstuff;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -25,16 +29,50 @@ import java.util.List;
 
 public class UserListActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Session session;
+
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/userlist.php";
     private JsonArrayRequest ArrayRequest ;
-    private RequestQueue requestQueue ;
+    private RequestQueue requestQueue;
     private List<otherUser> lstUser;
     private RecyclerView recyclerView;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent i;
+            switch (item.getItemId()) {
+                case R.id.nav_activity:
+                    i = new Intent(getApplicationContext(), ActivityFeed.class);
+                    startActivity(i);
+                    break;
+                case R.id.nav_gameSearch:
+                    i = new Intent(getApplicationContext(), GameListActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.nav_userPage:
+                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.nav_userSearch:
+                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.nav_logout:
+                    session.logoutUser();
+                    break;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lstUser = new ArrayList<>();
         recyclerView = findViewById(R.id.userList);
         jsoncall();
@@ -53,12 +91,8 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                         jsonObject = response.getJSONObject(i);
                         otherUser otherUser = new otherUser();
                         otherUser.setOtherUserId(jsonObject.getInt("user_id"));
-                        otherUser.setOtherEmail(jsonObject.getString("Email"));
                         otherUser.setOtherUsername(jsonObject.getString("Username"));
-                        otherUser.setOtherName(jsonObject.getString("Name"));
-                        otherUser.setOtherLocation(jsonObject.getString("Location"));
                         otherUser.setOtherBio(jsonObject.getString("Bio"));
-                        otherUser.setOtherPronoun(jsonObject.getString("Pronoun"));
                         otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
                         otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
                         lstUser.add(otherUser);

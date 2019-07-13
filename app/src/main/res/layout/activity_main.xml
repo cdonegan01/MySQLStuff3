@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:onClick="OnLogin"
         android:text="LOG IN"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/passwordText"
