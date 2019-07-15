@@ -119,7 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
                             //Check if user got registered successfully
                             if (response.getInt(KEY_STATUS) == 0) {
                                 //Set the user session
-                                session.loginUser(username, email);
+                                session.loginUser(username, response.getInt("userId"), email, response.getString("bio"), response.getString("avatar"),
+                                        response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 
                             }else if(response.getInt(KEY_STATUS) == 1){

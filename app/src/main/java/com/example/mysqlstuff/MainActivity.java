@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                             //Check if user got logged in successfully
 
                             if (response.getInt(KEY_STATUS) == 0) {
-                                session.loginUser(username,response.getString(KEY_FULL_NAME));
+                                session.loginUser(username, response.getInt("userId"), response.getString("email"), response.getString("bio"), response.getString("avatar"),
+                                        response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 
                             }else{

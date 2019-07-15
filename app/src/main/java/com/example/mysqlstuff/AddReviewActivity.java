@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.objects.Review;
+import com.example.mysqlstuff.objects.User;
 
 import java.util.List;
 
@@ -52,11 +54,15 @@ public class AddReviewActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_logout:
                     session.logoutUser();
+                    Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(logout);
+                    finish();
                     break;
             }
             return false;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class AddReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_review);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        session = new Session(getApplicationContext());
+        User user = session.getUserDetails();
 
         String name  = getIntent().getExtras().getString("title");
         String image_url = getIntent().getExtras().getString("cover_art");
@@ -71,6 +79,8 @@ public class AddReviewActivity extends AppCompatActivity {
 
         TextView tv_name = findViewById(R.id.gameNameAddID);
         ImageView img = findViewById(R.id.addReviewGamePicID);
+        EditText reviewHeading = findViewById(R.id.headingEnterID);
+        EditText review = findViewById(R.id.reviewEnterID);
 
         tv_name.setText(name);
         RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
