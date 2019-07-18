@@ -22,6 +22,8 @@ import java.util.List;
 
 public class AddReviewActivity extends AppCompatActivity {
 
+
+
     private Session session;
 
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
@@ -45,7 +47,7 @@ public class AddReviewActivity extends AppCompatActivity {
                     startActivity(i);
                     break;
                 case R.id.nav_userPage:
-                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    i = new Intent(getApplicationContext(), UserPageActivity.class);
                     startActivity(i);
                     break;
                 case R.id.nav_userSearch:
@@ -83,7 +85,7 @@ public class AddReviewActivity extends AppCompatActivity {
         EditText review = findViewById(R.id.reviewEnterID);
 
         tv_name.setText(name);
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
         Glide.with(this).load(image_url).apply(requestOptions).into(img);
 
     }

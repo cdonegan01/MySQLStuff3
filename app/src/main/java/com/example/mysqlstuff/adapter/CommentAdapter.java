@@ -26,7 +26,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     public CommentAdapter(Context mContext, List<Comment> mData) {
             this.mContext = mContext;
             this.mData = mData;
-            options = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+            options = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
 
         }
 

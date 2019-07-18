@@ -28,7 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     public UserAdapter(Context mContext, List<otherUser> mData) {
         this.mContext = mContext;
         this.mData = mData;
-        options = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        options = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
 
     }
 

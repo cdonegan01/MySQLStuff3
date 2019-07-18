@@ -52,7 +52,7 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(i);
                     break;
                 case R.id.nav_userPage:
-                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    i = new Intent(getApplicationContext(), UserPageActivity.class);
                     startActivity(i);
                     break;
                 case R.id.nav_userSearch:
@@ -61,6 +61,9 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                     break;
                 case R.id.nav_logout:
                     session.logoutUser();
+                    Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(logout);
+                    finish();
                     break;
             }
             return false;

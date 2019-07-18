@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
             //Populate the request parameters
             request.put(KEY_USERNAME, username);
             request.put(KEY_PASSWORD, password);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                         pDialog.dismiss();
                         try {
                             //Check if user got logged in successfully
-
                             if (response.getInt(KEY_STATUS) == 0) {
-                                session.loginUser(username, response.getInt("userId"), response.getString("email"), response.getString("bio"), response.getString("avatar"),
+                                session.loginUser(username, response.getInt("userId"), response.getString("bio"), response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 

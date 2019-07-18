@@ -15,16 +15,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.adapter.ReviewAdapter2;
 import com.example.mysqlstuff.objects.Review;
+import com.example.mysqlstuff.objects.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,8 +41,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     private Session session;
 
+    private static final String KEY_STATUS = "status";
+    private static final String KEY_MESSAGE = "message";
+
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
+    private String URL_JSON3 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> lstReviews;
@@ -59,7 +67,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
                     startActivity(i);
                     break;
                 case R.id.nav_userPage:
-                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    i = new Intent(getApplicationContext(), UserPageActivity.class);
                     startActivity(i);
                     break;
                 case R.id.nav_userSearch:
@@ -68,6 +76,9 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
                     break;
                 case R.id.nav_logout:
                     session.logoutUser();
+                    Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(logout);
+                    finish();
                     break;
             }
             return false;
@@ -80,14 +91,15 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_other_user);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        session = new Session(getApplicationContext());
+        final User user = session.getUserDetails();
         String name  = getIntent().getExtras().getString("otherUsername");
         String bio = getIntent().getExtras().getString("otherBio");
         String reviewTitle = "Critiques by "+name;
         String image_url = getIntent().getExtras().getString("otherProfilePic");
         String followers = getIntent().getExtras().getString("otherFollowers")+" Followers";
         //String helpful = "Helpful Score: "+getIntent().getExtras().getString("otherHelpful");
-        int authorID = getIntent().getExtras().getInt("author");
+        final int otherUserId = getIntent().getExtras().getInt("otherUserId");
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.otherUserName);
         collapsingToolbarLayout.setTitleEnabled(true);
@@ -97,16 +109,27 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         TextView otherFollowers = findViewById(R.id.otherUserFollowers);
         ImageView otherUserProfile = findViewById(R.id.otherUserProfile);
 
+        Button followButton = findViewById(R.id.followButton);
+
         otherUserBio.setText(bio);
         otherReviewsTitle.setText(reviewTitle);
         otherFollowers.setText(followers);
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
         Glide.with(this).load(image_url).apply(requestOptions).into(otherUserProfile);
 
         collapsingToolbarLayout.setTitle(name);
 
         ConstraintLayout constraintLayout1 = findViewById(R.id.constraingLayoutOtherUser);
         constraintLayout1.setOnClickListener(this);
+
+        followChecker(user.getUserId(), otherUserId);
+
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followUser(user.getUserId(), otherUserId);
+            }
+        });
 
         lstReviews = new ArrayList<>();
         recyclerView = findViewById(R.id.otherUserReviews);
@@ -242,9 +265,54 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void goToUserList(View view) {
-        Intent intent = new Intent(this, UserListActivity.class);
-        startActivity(intent);
+    public void followUser (int currentUserID, int followedUserID) {
+        String currentPost = Integer.toString(currentUserID);
+        String followPost = Integer.toString(followedUserID);
+        new Backgroundworker(this).execute("follow", currentPost, followPost);
+
+        Toast.makeText(getApplicationContext(),
+                "You are now following this user!", Toast.LENGTH_SHORT).show();
+        View a = findViewById(R.id.followButton);
+        a.setVisibility(View.GONE);
+        View b = findViewById(R.id.textViewFollowed);
+        b.setVisibility(View.VISIBLE);
+    }
+
+    public void followChecker (final int currentUserID, final int followedUserID) {
+        ArrayRequest = new JsonArrayRequest(URL_JSON3, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                int counter = 0;
+                for (int i = 0 ; i<response.length();i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        if (jsonObject.getInt("User") == currentUserID && jsonObject.getInt("FollowedUser") == followedUserID) {
+                            counter++;
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (counter > 0) {
+                    View a = findViewById(R.id.followButton);
+                    a.setVisibility(View.GONE);
+                    View b = findViewById(R.id.textViewFollowed);
+                    b.setVisibility(View.VISIBLE);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue = Volley.newRequestQueue(OtherUserActivity.this);
+        requestQueue.add(ArrayRequest);
+
     }
 
     public void onClick(View view) {

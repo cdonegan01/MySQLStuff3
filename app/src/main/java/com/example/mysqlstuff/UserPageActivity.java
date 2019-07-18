@@ -102,7 +102,7 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
 
         currentUserBio.setText(bio);
         currentUserFollowers.setText(followers+" Followers");
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
         Glide.with(this).load(image_url).apply(requestOptions).into(currentUserProfile);
 
         collapsingToolbarLayout.setTitle(name);

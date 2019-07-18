@@ -56,7 +56,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(i);
                     break;
                 case R.id.nav_userPage:
-                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    i = new Intent(getApplicationContext(), UserPageActivity.class);
                     startActivity(i);
                     break;
                 case R.id.nav_userSearch:
@@ -65,6 +65,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case R.id.nav_logout:
                     session.logoutUser();
+                    Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(logout);
+                    finish();
                     break;
             }
             return false;
@@ -107,7 +110,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ConstraintLayout constraintLayout1 = findViewById(R.id.innerConstraint);
         constraintLayout1.setOnClickListener(this);
 
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
 
 
         // set image using Glide

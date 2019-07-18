@@ -13,25 +13,25 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
-    private static final String KEY_EMAIL = "email";
+    private static final String KEY_BIO = "bio";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMPTY = "";
     private EditText etUsername;
     private EditText etPassword;
     private EditText etConfirmPassword;
-    private EditText etEmail;
+    private EditText etBio;
     private String username;
     private String password;
     private String confirmPassword;
-    private String email;
+    private String bio;
     private ProgressDialog pDialog;
     private String register_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/register2.php";
     private Session session;
@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.editTextUsername);
         etPassword = findViewById(R.id.editTextPassword);
         etConfirmPassword = findViewById(R.id.editTextConfirmPassword);
-        etEmail = findViewById(R.id.editTextEmail);
+        etBio = findViewById(R.id.editTextBio);
 
         Button login = findViewById(R.id.goToLoginButton);
         Button register = findViewById(R.id.buttonRegister);
@@ -67,7 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
                 confirmPassword = etConfirmPassword.getText().toString();
-                email = etEmail.getText().toString();
+                bio = etBio.getText().toString();
+
                 if (validateInputs()) {
                     registerUser();
                 }
@@ -106,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
             //Populate the request parameters
             request.put(KEY_USERNAME, username);
             request.put(KEY_PASSWORD, password);
-            request.put(KEY_EMAIL, email);
+            request.put(KEY_BIO, bio);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -119,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //Check if user got registered successfully
                             if (response.getInt(KEY_STATUS) == 0) {
                                 //Set the user session
-                                session.loginUser(username, response.getInt("userId"), email, response.getString("bio"), response.getString("avatar"),
+                                session.loginUser(username, response.getInt("userId"), bio, response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 
@@ -159,12 +160,6 @@ public class RegisterActivity extends AppCompatActivity {
      * @return
      */
     private boolean validateInputs() {
-        if (KEY_EMPTY.equals(email)) {
-            etEmail.setError("Full Name cannot be empty");
-            etEmail.requestFocus();
-            return false;
-
-        }
         if (KEY_EMPTY.equals(username)) {
             etUsername.setError("Username cannot be empty");
             etUsername.requestFocus();

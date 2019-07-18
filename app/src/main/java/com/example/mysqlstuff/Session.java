@@ -43,12 +43,10 @@ public class Session {
      * Logs in the user by saving user details and setting session
      *
      * @param username
-     * @param email
      */
-    public void loginUser(final String username, final int id, final String email, final String bio, final String avatar, final int followers, final int type) {
+    public void loginUser(final String username, final int id, final String bio, final String avatar, final int followers, final int type) {
         mEditor.putString(KEY_USERNAME, username);
         mEditor.putInt(KEY_ID, id);
-        mEditor.putString(KEY_EMAIL, email);
         mEditor.putString(KEY_BIO, bio);
         mEditor.putString(KEY_AVATAR, avatar);
         mEditor.putInt(KEY_FOLLOWERS, followers);
