@@ -17,12 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -47,10 +45,15 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
     private String URL_JSON3 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
+    private String URL_JSON4 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulList.php";
+    private String follow_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/userFollow0.php";
+    private String helpful_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulUser.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> lstReviews;
     private RecyclerView recyclerView;
+    private TextView otherFollowers;
+    private TextView otherHelpful;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -106,10 +109,13 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
         TextView otherUserBio = findViewById(R.id.otherUserBio);
         TextView otherReviewsTitle = findViewById(R.id.otherReviewsTitle);
-        TextView otherFollowers = findViewById(R.id.otherUserFollowers);
+        otherFollowers = findViewById(R.id.otherUserFollowers);
         ImageView otherUserProfile = findViewById(R.id.otherUserProfile);
+        otherHelpful = findViewById(R.id.otherUserHelpfulRating);
 
         Button followButton = findViewById(R.id.followButton);
+
+        Button helpfulButton = findViewById(R.id.helpfulButton);
 
         otherUserBio.setText(bio);
         otherReviewsTitle.setText(reviewTitle);
@@ -123,11 +129,19 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         constraintLayout1.setOnClickListener(this);
 
         followChecker(user.getUserId(), otherUserId);
+        helpfulChecker(user.getUserId(), otherUserId);
 
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 followUser(user.getUserId(), otherUserId);
+            }
+        });
+
+        helpfulButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                helpfulUser(user.getUserId(), otherUserId);
             }
         });
 
@@ -268,13 +282,62 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     public void followUser (int currentUserID, int followedUserID) {
         String currentPost = Integer.toString(currentUserID);
         String followPost = Integer.toString(followedUserID);
-        new Backgroundworker(this).execute("follow", currentPost, followPost);
-
+        new Backgroundworker(this).execute("userInteract", helpful_url, currentPost, followPost);
         Toast.makeText(getApplicationContext(),
                 "You are now following this user!", Toast.LENGTH_SHORT).show();
         View a = findViewById(R.id.followButton);
         a.setVisibility(View.GONE);
         View b = findViewById(R.id.textViewFollowed);
+        b.setVisibility(View.VISIBLE);
+    }
+
+    public void helpfulChecker (final int currentUserID, final int followedUserID) {
+        ArrayRequest = new JsonArrayRequest(URL_JSON4, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                int counter = 0;
+                for (int i = 0 ; i<response.length();i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        if (jsonObject.getInt("Liking_User") == currentUserID && jsonObject.getInt("Liked_User") == followedUserID) {
+                            counter++;
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (counter > 0) {
+                    otherHelpful.setText("Helpful Rating: "+counter);
+                    View a = findViewById(R.id.helpfulButton);
+                    a.setVisibility(View.GONE);
+                    View b = findViewById(R.id.helpfulUserTV);
+                    b.setVisibility(View.VISIBLE);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue = Volley.newRequestQueue(OtherUserActivity.this);
+        requestQueue.add(ArrayRequest);
+
+    }
+
+    public void helpfulUser (int currentUserID, int followedUserID) {
+        String currentPost = Integer.toString(currentUserID);
+        String followPost = Integer.toString(followedUserID);
+        new Backgroundworker(this).execute("userInteract", follow_url, currentPost, followPost);
+        Toast.makeText(getApplicationContext(),
+                "You have marked this user as helpful!", Toast.LENGTH_SHORT).show();
+        View a = findViewById(R.id.helpfulButton);
+        a.setVisibility(View.GONE);
+        View b = findViewById(R.id.helpfulUserTV);
         b.setVisibility(View.VISIBLE);
     }
 
@@ -297,6 +360,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
                 }
 
                 if (counter > 0) {
+                    otherFollowers.setText("Followers: "+counter);
                     View a = findViewById(R.id.followButton);
                     a.setVisibility(View.GONE);
                     View b = findViewById(R.id.textViewFollowed);

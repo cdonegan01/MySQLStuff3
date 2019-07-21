@@ -44,12 +44,35 @@
                         android:orientation="horizontal"
                         android:padding="50dp">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="137dp"
+                            android:layout_margin="8dp"
+                            android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/otherUserProfile"
-                            android:layout_width="94dp"
-                            android:layout_height="89dp"
-                            android:background="@drawable/ic_account_box_black_24dp" />
+                            <ImageView
+                                android:id="@+id/otherUserProfile"
+                                android:layout_width="94dp"
+                                android:layout_height="89dp"
+                                android:background="@drawable/ic_account_box_black_24dp" />
+
+                            <Button
+                                android:id="@+id/helpfulButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Helpful User"
+                                android:textSize="12sp"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:id="@+id/helpfulUserTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="5dp"
+                                android:text="You've rated this user as helpful!"
+                                android:textSize="12sp"
+                                android:visibility="gone" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -72,7 +95,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:text="Helpful Rating: 0" />
-
 
                             <TextView
                                 android:id="@+id/otherUserBio"

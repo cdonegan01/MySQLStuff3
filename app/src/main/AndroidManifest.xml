@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,6 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddReviewActivity" />
-        <activity android:name=".UserReviewsActivity" />
         <activity android:name=".ActivityFeed" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".UserPageActivity" />

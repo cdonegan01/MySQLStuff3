@@ -15,6 +15,19 @@
             android:layout_height="wrap_content"
             tools:context=".ReviewActivity">
 
+            <ImageView
+                android:id="@+id/likedButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/commentField"
+                app:layout_constraintEnd_toStartOf="@+id/likeCounterID"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+                app:srcCompat="@android:drawable/btn_star_big_on"
+                tools:visibility="gone" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/commendsRvID"
                 android:layout_width="331dp"
@@ -57,7 +70,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@drawable/ic_account_box_black_24dp" />
 
             <TextView
                 android:id="@+id/authorNameID"
@@ -109,32 +122,58 @@
                 android:id="@+id/likeButtonID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/commentTextView"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toStartOf="@+id/likeCounterID"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-                app:layout_constraintVertical_bias="0.888"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
 
             <TextView
                 android:id="@+id/likeCounterID"
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="228dp"
+                android:layout_marginRight="228dp"
                 android:text="0 Likes"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/likeButtonID"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
             <TextView
                 android:id="@+id/commentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="COMMENTS"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentButton" />
+
+            <Button
+                android:id="@+id/commentButton"
+                android:layout_width="113dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="8dp"
+                android:text="Post Comment"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentField" />
+
+            <EditText
+                android:id="@+id/commentField"
+                android:layout_width="385dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Type a comment here..."
+                android:inputType="textMultiLine"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

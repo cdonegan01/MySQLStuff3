@@ -10,10 +10,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.mysqlstuff.OtherUserActivity;
 import com.example.mysqlstuff.R;
 import com.example.mysqlstuff.objects.Comment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -22,6 +32,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         private Context mContext;
         private List<Comment> mData;
         RequestOptions options;
+        private JsonArrayRequest ArrayRequest;
+        private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulList.php";
 
     public CommentAdapter(Context mContext, List<Comment> mData) {
             this.mContext = mContext;
@@ -70,4 +82,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
             }
         }
+
+
 }

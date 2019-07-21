@@ -25,7 +25,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="gameName"
-        android:textSize="14sp"
+        android:textSize="18sp "
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/addReviewGamePicID"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
         android:layout_height="243dp"
         android:ems="10"
         android:gravity="start"
-        android:hint="Type your Review Here"
+        android:hint="Type your Article Here!"
         android:inputType="textMultiLine"
         android:singleLine="false"
         android:text=""
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Review"
+        android:text="Article"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,5 +119,17 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </android.support.constraint.ConstraintLayout>
