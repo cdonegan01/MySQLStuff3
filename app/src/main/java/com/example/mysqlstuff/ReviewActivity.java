@@ -51,6 +51,7 @@ public class ReviewActivity extends AppCompatActivity {
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/commentList.php";
     private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/likeList.php";
     private String reviewLikeURL = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewLiker.php";
+    private String commentPostURL = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/commentPoster.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Comment> lstComments;
@@ -138,6 +139,8 @@ public class ReviewActivity extends AppCompatActivity {
         likeChecker(user.getUserId(), reviewId);
 
         Button commenter = findViewById(R.id.commentButton);
+
+        commentField = findViewById(R.id.commentField);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,15 +303,14 @@ public class ReviewActivity extends AppCompatActivity {
         displayLoader();
         JSONObject request = new JSONObject();
         try {
-            //Populate the request parameters
-            request.put(KEY_USER, author);
             request.put(KEY_COMMENT, comment);
+            request.put(KEY_USER, author);
             request.put(KEY_REVIEw, review);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         JsonObjectRequest jsArrayRequest = new JsonObjectRequest
-                (Request.Method.POST, URL_JSON, request, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, commentPostURL, request, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
