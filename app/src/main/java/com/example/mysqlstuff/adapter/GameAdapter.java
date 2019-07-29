@@ -19,13 +19,13 @@ import com.example.mysqlstuff.R;
 
 import java.util.List;
 
-public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<Game> mData;
     RequestOptions options;
 
-    public RvAdapter(Context mContext, List<Game> mData) {
+    public GameAdapter(Context mContext, List<Game> mData) {
         this.mContext = mContext;
         this.mData = mData;
         options = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);

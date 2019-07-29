@@ -39,9 +39,6 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     private Session session;
 
-    private static final String KEY_STATUS = "status";
-    private static final String KEY_MESSAGE = "message";
-
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
     private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
     private String URL_JSON3 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
@@ -169,6 +166,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
                             review.setLikes(jsonObject.getString("Likes"));
                             review.setRating(jsonObject.getString("Rating"));
                             review.setReview(jsonObject.getString("Review"));
+                            review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
                             lstReviews.add(review);
@@ -282,7 +280,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     public void followUser (int currentUserID, int followedUserID) {
         String currentPost = Integer.toString(currentUserID);
         String followPost = Integer.toString(followedUserID);
-        new Backgroundworker(this).execute("userInteract", helpful_url, currentPost, followPost);
+        new Backgroundworker(this).execute("userInteract", follow_url, currentPost, followPost);
         Toast.makeText(getApplicationContext(),
                 "You are now following this user!", Toast.LENGTH_SHORT).show();
         View a = findViewById(R.id.followButton);
@@ -332,7 +330,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     public void helpfulUser (int currentUserID, int followedUserID) {
         String currentPost = Integer.toString(currentUserID);
         String followPost = Integer.toString(followedUserID);
-        new Backgroundworker(this).execute("userInteract", follow_url, currentPost, followPost);
+        new Backgroundworker(this).execute("userInteract", helpful_url, currentPost, followPost);
         Toast.makeText(getApplicationContext(),
                 "You have marked this user as helpful!", Toast.LENGTH_SHORT).show();
         View a = findViewById(R.id.helpfulButton);

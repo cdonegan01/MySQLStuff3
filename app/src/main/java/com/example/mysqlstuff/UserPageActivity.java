@@ -135,6 +135,7 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
                             review.setLikes(jsonObject.getString("Likes"));
                             review.setRating(jsonObject.getString("Rating"));
                             review.setReview(jsonObject.getString("Review"));
+                            review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
                             lstReviews.add(review);

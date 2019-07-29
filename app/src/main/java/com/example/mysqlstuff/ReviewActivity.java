@@ -173,6 +173,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void jsoncall() {
+        lstComments.clear();
         final int reviewID = getIntent().getExtras().getInt("reviewId");
         ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
             @Override

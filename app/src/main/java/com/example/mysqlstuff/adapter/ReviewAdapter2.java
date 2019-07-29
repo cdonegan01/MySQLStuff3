@@ -47,7 +47,7 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
 
         myViewHolder.gameNameTextView.setText(mData.get(i).getGameName());
         myViewHolder.ratingTextView.setText(mData.get(i).getRating()+"/10");
-        myViewHolder.reviewTextView.setText(mData.get(i).getReview());
+        myViewHolder.reviewTextView.setText(mData.get(i).getHeading());
         Glide.with(mContext).load(mData.get(i).getGamePictureUrl()).apply(options).into(myViewHolder.gamePicture);
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +63,7 @@ public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHo
                 i.putExtra("gamePicture",mData.get(myViewHolder.getAdapterPosition()).getGamePictureUrl());
                 i.putExtra("likes",mData.get(myViewHolder.getAdapterPosition()).getLikes());
                 i.putExtra("rating",mData.get(myViewHolder.getAdapterPosition()).getRating());
+                i.putExtra("heading",mData.get(myViewHolder.getAdapterPosition()).getHeading());
 
                 mContext.startActivity(i);
             }

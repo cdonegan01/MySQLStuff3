@@ -10,13 +10,14 @@ public class Review {
     private String review;
     private String gamePictureUrl;
     private String likes;
+    private String heading;
     private int authorId;
     private int gameId;
 
     public Review() {
     }
 
-    public Review(int reviewId, String gameName, String authorName, String authorPictureUrl, String rating, String review, String gamePictureUrl, String likes, int authorId, int gameId) {
+    public Review(int reviewId, String gameName, String authorName, String authorPictureUrl, String rating, String review, String gamePictureUrl, String likes, String heading, int authorId, int gameId) {
         this.reviewId = reviewId;
         this.gameName = gameName;
         this.authorName = authorName;
@@ -25,6 +26,7 @@ public class Review {
         this.review = review;
         this.gamePictureUrl = gamePictureUrl;
         this.likes = likes;
+        this.heading = heading;
         this.authorId = authorId;
         this.gameId = gameId;
     }
@@ -91,6 +93,14 @@ public class Review {
 
     public void setLikes(String likes) {
         this.likes = likes;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
     }
 
     public int getAuthorId() {

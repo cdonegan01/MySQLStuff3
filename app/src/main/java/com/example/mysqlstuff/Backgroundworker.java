@@ -72,47 +72,6 @@ public class Backgroundworker extends AsyncTask<String, String, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (type.equals("reviewPost")) {
-            try {
-                URL url = new URL(params[1]);
-                String first = params[2];
-                String second = params[3];
-                String third = params[4];
-                String fourth = params[5];
-                String fifth = params[6];
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("first", "UTF-8") + "=" + URLEncoder.encode(first, "UTF-8") + "&"
-                        + URLEncoder.encode("second", "UTF-8") + "=" + URLEncoder.encode(second, "UTF-8")  + "&"
-                        + URLEncoder.encode("third", "UTF-8") + "=" + URLEncoder.encode(third, "UTF-8")  + "&"
-                        + URLEncoder.encode("fourth", "UTF-8") + "=" + URLEncoder.encode(fourth, "UTF-8")  + "&"
-                        + URLEncoder.encode("fifth", "UTF-8") + "=" + URLEncoder.encode(fifth, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                if (result!= null) {
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }

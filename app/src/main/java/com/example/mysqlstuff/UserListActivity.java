@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mysqlstuff.adapter.UserAdapter;
+import com.example.mysqlstuff.objects.User;
 import com.example.mysqlstuff.objects.otherUser;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ import java.util.List;
 public class UserListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Session session;
+    private User user = new User();
 
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/userlist.php";
     private JsonArrayRequest ArrayRequest ;
@@ -76,6 +78,8 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_user_list);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        session = new Session(getApplicationContext());
+        User user = session.getUserDetails();
         lstUser = new ArrayList<>();
         recyclerView = findViewById(R.id.userList);
         jsoncall();
@@ -92,13 +96,16 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                 for (int i = 0 ; i<response.length();i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        otherUser otherUser = new otherUser();
-                        otherUser.setOtherUserId(jsonObject.getInt("user_id"));
-                        otherUser.setOtherUsername(jsonObject.getString("Username"));
-                        otherUser.setOtherBio(jsonObject.getString("Bio"));
-                        otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
-                        otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
-                        lstUser.add(otherUser);
+                        if (jsonObject.getInt("user_id") != user.getUserId()) {
+                            otherUser otherUser = new otherUser();
+                            otherUser.setOtherUserId(jsonObject.getInt("user_id"));
+                            otherUser.setOtherUsername(jsonObject.getString("Username"));
+                            otherUser.setOtherBio(jsonObject.getString("Bio"));
+                            otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
+                            otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
+                            lstUser.add(otherUser);
+                        }
+
                     }
                     catch (JSONException e) {
                         e.printStackTrace();

@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.mysqlstuff.adapter.RvAdapter;
+import com.example.mysqlstuff.adapter.GameAdapter;
 import com.example.mysqlstuff.objects.Game;
 
 import org.json.JSONArray;
@@ -124,7 +124,7 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
 
     public void setRvadapter (List<Game> lstGame) {
 
-        RvAdapter myAdapter = new RvAdapter(this,lstGame) ;
+        GameAdapter myAdapter = new GameAdapter(this,lstGame) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 

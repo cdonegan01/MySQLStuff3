@@ -47,7 +47,7 @@ public class ReviewAdapter1 extends RecyclerView.Adapter<ReviewAdapter1.MyViewHo
 
         myViewHolder.usernameTextView.setText(mData.get(i).getAuthorName());
         myViewHolder.ratingTextView.setText(mData.get(i).getRating()+"/10");
-        myViewHolder.commentTextView.setText(mData.get(i).getReview());
+        myViewHolder.commentTextView.setText(mData.get(i).getHeading());
         Glide.with(mContext).load(mData.get(i).getAuthorPictureUrl()).apply(options).into(myViewHolder.profilePicture);
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -63,6 +63,7 @@ public class ReviewAdapter1 extends RecyclerView.Adapter<ReviewAdapter1.MyViewHo
         i.putExtra("gamePicture",mData.get(myViewHolder.getAdapterPosition()).getGamePictureUrl());
         i.putExtra("likes",mData.get(myViewHolder.getAdapterPosition()).getLikes());
         i.putExtra("rating",mData.get(myViewHolder.getAdapterPosition()).getRating());
+        i.putExtra("heading",mData.get(myViewHolder.getAdapterPosition()).getHeading());
 
         mContext.startActivity(i);
         }

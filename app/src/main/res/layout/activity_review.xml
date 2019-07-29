@@ -30,8 +30,8 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/commendsRvID"
-                android:layout_width="331dp"
-                android:layout_height="wrap_content"
+                android:layout_width="338dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -166,9 +166,9 @@
 
             <EditText
                 android:id="@+id/commentField"
-                android:layout_width="385dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_width="338dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="12dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="Type a comment here..."
