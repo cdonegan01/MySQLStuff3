@@ -13,17 +13,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mysqlstuff.objects.Constants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private static final String KEY_STATUS = "status";
-    private static final String KEY_MESSAGE = "message";
-    private static final String KEY_BIO = "bio";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_EMPTY = "";
     private EditText etUsername;
     private EditText etPassword;
     private EditText etConfirmPassword;
@@ -105,9 +101,9 @@ public class RegisterActivity extends AppCompatActivity {
         JSONObject request = new JSONObject();
         try {
             //Populate the request parameters
-            request.put(KEY_USERNAME, username);
-            request.put(KEY_PASSWORD, password);
-            request.put(KEY_BIO, bio);
+            request.put(Constants.USERNAME, username);
+            request.put(Constants.PASSWORD, password);
+            request.put(Constants.BIO, bio);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -118,20 +114,20 @@ public class RegisterActivity extends AppCompatActivity {
                         pDialog.dismiss();
                         try {
                             //Check if user got registered successfully
-                            if (response.getInt(KEY_STATUS) == 0) {
+                            if (response.getInt(Constants.STATUS) == 0) {
                                 //Set the user session
                                 session.loginUser(username, response.getInt("userId"), bio, response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 
-                            }else if(response.getInt(KEY_STATUS) == 1){
+                            }else if(response.getInt(Constants.STATUS) == 1){
                                 //Display error message if username is already taken
                                 etUsername.setError("Username already taken!");
                                 etUsername.requestFocus();
 
                             }else{
                                 Toast.makeText(getApplicationContext(),
-                                        response.getString(KEY_MESSAGE), Toast.LENGTH_SHORT).show();
+                                        response.getString(Constants.MESSAGE), Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {
@@ -160,18 +156,18 @@ public class RegisterActivity extends AppCompatActivity {
      * @return
      */
     private boolean validateInputs() {
-        if (KEY_EMPTY.equals(username)) {
+        if (Constants.NULL.equals(username)) {
             etUsername.setError("Username cannot be empty");
             etUsername.requestFocus();
             return false;
         }
-        if (KEY_EMPTY.equals(password)) {
+        if (Constants.NULL.equals(password)) {
             etPassword.setError("Password cannot be empty");
             etPassword.requestFocus();
             return false;
         }
 
-        if (KEY_EMPTY.equals(confirmPassword)) {
+        if (Constants.NULL.equals(confirmPassword)) {
             etConfirmPassword.setError("Confirm Password cannot be empty");
             etConfirmPassword.requestFocus();
             return false;

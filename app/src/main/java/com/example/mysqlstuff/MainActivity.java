@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,24 +14,13 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.mysqlstuff.objects.User;
+import com.example.mysqlstuff.objects.Constants;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
 public class MainActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
-
-    private static final String KEY_STATUS = "status";
-    private static final String KEY_MESSAGE = "message";
-    private static final String KEY_FULL_NAME = "email";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_EMPTY = "";
     private EditText UsernameEt;
     private EditText PasswordEt;
     private String username;
@@ -121,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         JSONObject request = new JSONObject();
         try {
             //Populate the request parameters
-            request.put(KEY_USERNAME, username);
-            request.put(KEY_PASSWORD, password);
+            request.put(Constants.USERNAME, username);
+            request.put(Constants.PASSWORD, password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,14 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                         pDialog.dismiss();
                         try {
                             //Check if user got logged in successfully
-                            if (response.getInt(KEY_STATUS) == 0) {
+                            if (response.getInt(Constants.MESSAGE) == 0) {
                                 session.loginUser(username, response.getInt("userId"), response.getString("bio"), response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
                                 loadDashboard();
 
                             }else{
                                 Toast.makeText(getApplicationContext(),
-                                        response.getString(KEY_MESSAGE), Toast.LENGTH_SHORT).show();
+                                        response.getString(Constants.MESSAGE), Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {
@@ -169,12 +156,12 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
      * @return
      */
     private boolean validateInputs() {
-        if(KEY_EMPTY.equals(username)){
+        if(Constants.NULL.equals(username)){
             UsernameEt.setError("Username cannot be empty");
             UsernameEt.requestFocus();
             return false;
         }
-        if(KEY_EMPTY.equals(password)){
+        if(Constants.NULL.equals(password)){
             PasswordEt.setError("Password cannot be empty");
             PasswordEt.requestFocus();
             return false;

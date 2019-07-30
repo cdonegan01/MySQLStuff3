@@ -19,67 +19,100 @@ import com.example.mysqlstuff.R;
 
 import java.util.List;
 
+/**
+ * This class applies the Game format to RecyclerViews that display Games.
+ */
+
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
-    private Context mContext;
-    private List<Game> mData;
+    /**
+     * Declaring Vars
+     */
+
+    private Context context;
+    private List<Game> games;
     RequestOptions options;
 
-    public GameAdapter(Context mContext, List<Game> mData) {
-        this.mContext = mContext;
-        this.mData = mData;
+    /**
+     * Constructor for GameAdapter
+     * @param context
+     * @param games
+     */
+
+    public GameAdapter(Context context, List<Game> games) {
+        this.context = context;
+        this.games = games;
         options = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
 
     }
+
+    /**
+     * Creates a view that holds the layout for Games in a list format
+     * @param viewGroup
+     * @param i
+     * @return
+     */
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.gamelist_layout,viewGroup, false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
         return new MyViewHolder(view);
     }
 
+    /**
+     * Applies the parameters of the Game object to the created viewholder and prepares the Intent for user interaction.
+     * @param myViewHolder
+     * @param i
+     */
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.game_name.setText(mData.get(i).getTitle());
-        myViewHolder.game_rating.setText(mData.get(i).getAverageRating());
-        myViewHolder.game_developer.setText(mData.get(i).getDeveloper());
-        myViewHolder.game_year.setText(mData.get(i).getReleaseYear());
+        myViewHolder.game_name.setText(games.get(i).getTitle());
+        myViewHolder.game_developer.setText(games.get(i).getDeveloper());
+        myViewHolder.game_year.setText(games.get(i).getReleaseYear());
 
-        Glide.with(mContext).load(mData.get(i).getImage_url()).apply(options).into(myViewHolder.img_thumbnail);
+        Glide.with(context).load(games.get(i).getImage_url()).apply(options).into(myViewHolder.img_thumbnail);
 
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mContext, GameActivity.class);
-                i.putExtra("id",mData.get(myViewHolder.getAdapterPosition()).getGameId());
-                i.putExtra("title",mData.get(myViewHolder.getAdapterPosition()).getTitle());
-                i.putExtra("description",mData.get(myViewHolder.getAdapterPosition()).getDescription());
-                i.putExtra("average_rating",mData.get(myViewHolder.getAdapterPosition()).getAverageRating());
-                i.putExtra("release_year",mData.get(myViewHolder.getAdapterPosition()).getReleaseYear());
-                i.putExtra("developer",mData.get(myViewHolder.getAdapterPosition()).getDeveloper());
-                i.putExtra("cover_art",mData.get(myViewHolder.getAdapterPosition()).getImage_url());
+                Intent i = new Intent(context, GameActivity.class);
+                i.putExtra("id", games.get(myViewHolder.getAdapterPosition()).getGameId());
+                i.putExtra("title", games.get(myViewHolder.getAdapterPosition()).getTitle());
+                i.putExtra("description", games.get(myViewHolder.getAdapterPosition()).getDescription());
+                i.putExtra("release_year", games.get(myViewHolder.getAdapterPosition()).getReleaseYear());
+                i.putExtra("developer", games.get(myViewHolder.getAdapterPosition()).getDeveloper());
+                i.putExtra("cover_art", games.get(myViewHolder.getAdapterPosition()).getImage_url());
 
-                mContext.startActivity(i);
+                context.startActivity(i);
             }
         });
 
     }
 
+    /**
+     * Returns the size of the Games arraylist
+     * @return
+     */
+
     @Override
     public int getItemCount() {
-        return mData.size();
+        return games.size();
     }
+
+    /**
+     * Creates the view elements for each variable and assigns them to an itemView objects in the layout file.
+     */
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView game_name;
         TextView game_developer;
-        TextView game_rating;
         TextView game_year;
         ImageView img_thumbnail;
         LinearLayout view_container;
@@ -90,7 +123,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
             view_container = itemView.findViewById(R.id.container);
             game_name = itemView.findViewById(R.id.rowName);
             game_developer = itemView.findViewById(R.id.developer);
-            game_rating = itemView.findViewById(R.id.rating);
             game_year = itemView.findViewById(R.id.releaseYearID);
             img_thumbnail = itemView.findViewById(R.id.thumbnail);
 

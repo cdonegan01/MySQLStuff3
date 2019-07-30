@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.adapter.CommentAdapter;
 import com.example.mysqlstuff.objects.Comment;
+import com.example.mysqlstuff.objects.Constants;
 import com.example.mysqlstuff.objects.User;
 
 import org.json.JSONArray;
@@ -39,14 +40,6 @@ import java.util.List;
 public class ReviewActivity extends AppCompatActivity {
 
     private Session session;
-
-
-    private static final String KEY_STATUS = "status";
-    private static final String KEY_MESSAGE = "message";
-    private static final String KEY_USER = "User";
-    private static final String KEY_COMMENT = "Comment";
-    private static final String KEY_REVIEw = "Review";
-    private static final String KEY_EMPTY = "";
     private ProgressDialog pDialog;
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/commentList.php";
     private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/likeList.php";
@@ -114,7 +107,6 @@ public class ReviewActivity extends AppCompatActivity {
         String rating = getIntent().getExtras().getString("rating");
         String image_url = getIntent().getExtras().getString("authorPicture");
         String gameImage = getIntent().getExtras().getString("gamePicture");
-        String likes = getIntent().getExtras().getString("likes")+" Likes";
         final int reviewId = getIntent().getExtras().getInt("reviewId");
 
         TextView tv_name = findViewById(R.id.gameTitleID);
@@ -162,7 +154,7 @@ public class ReviewActivity extends AppCompatActivity {
                 currentReview = Integer.toString(reviewId);
                 comment = commentField.getText().toString();
 
-                if (validateInputs()) {
+                if (validateInputs() == true) {
                     postComment(currentUser, currentReview, comment);
                 }
 
@@ -308,9 +300,9 @@ public class ReviewActivity extends AppCompatActivity {
         displayLoader();
         JSONObject request = new JSONObject();
         try {
-            request.put(KEY_COMMENT, comment);
-            request.put(KEY_USER, author);
-            request.put(KEY_REVIEw, review);
+            request.put(Constants.COMMENT, comment);
+            request.put(Constants.AUTHOR, author);
+            request.put(Constants.REVIEW, review);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -321,20 +313,20 @@ public class ReviewActivity extends AppCompatActivity {
                         pDialog.dismiss();
                         try {
                             //Check if user got registered successfully
-                            if (response.getInt(KEY_STATUS) == 0) {
+                            if (response.getInt(Constants.STATUS) == 0) {
                                 //Set the user session
                                 Toast.makeText(getApplicationContext(),
                                         "Comment Posted!", Toast.LENGTH_LONG).show();
                                 jsoncall();
 
-                            }else if(response.getInt(KEY_STATUS) == 1){
+                            }else if(response.getInt(Constants.STATUS) == 1){
                                 //Display error message if username is already taken
                                 Toast.makeText(getApplicationContext(),
                                         "Error!", Toast.LENGTH_LONG).show();
 
                             }else{
                                 Toast.makeText(getApplicationContext(),
-                                        response.getString(KEY_MESSAGE), Toast.LENGTH_SHORT).show();
+                                        response.getString(Constants.MESSAGE), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -365,7 +357,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
-        if (KEY_EMPTY.equals(commentField)) {
+        if (Constants.NULL.equals(commentField)) {
             commentField.setError("Must type a Comment!");
             commentField.requestFocus();
             return false;

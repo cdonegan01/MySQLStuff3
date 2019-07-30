@@ -36,11 +36,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Session session;
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
-    private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
+    private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
+    private String jsonURL2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
-    private List<Review> lstReviews;
+    private List<Review> reviewList;
     private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -94,7 +94,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String description = getIntent().getExtras().getString("description");
         String studio = getIntent().getExtras().getString("developer") ;
         String category = getIntent().getExtras().getString("release_year");
-        String rating = getIntent().getExtras().getString("average_rating");
         String image_url = getIntent().getExtras().getString("cover_art");
         int gameId = getIntent().getExtras().getInt("id");
 
@@ -105,13 +104,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         TextView tv_developer = findViewById(R.id.aa_developer);
         TextView tv_releaseYear = findViewById(R.id.aa_release_year) ;
         TextView tv_description = findViewById(R.id.aa_description);
-        TextView tv_rating  = findViewById(R.id.aa_rating) ;
         ImageView img = findViewById(R.id.aa_thumbnail);
 
         tv_name.setText(name);
         tv_releaseYear.setText(category);
         tv_description.setText(description);
-        tv_rating.setText(rating);
         tv_developer.setText(studio);
 
         collapsingToolbarLayout.setTitle(name);
@@ -125,14 +122,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // set image using Glide
         Glide.with(this).load(image_url).apply(requestOptions).into(img);
 
-        lstReviews = new ArrayList<>();
+        reviewList = new ArrayList<>();
         recyclerView = findViewById(R.id.gameReviews);
         jsoncall();
     }
 
     private void jsoncall() {
         final int gameid = getIntent().getExtras().getInt("id");
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -152,14 +149,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -172,9 +169,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void jsoncallGameRecent(View view) {
-        lstReviews.clear();
+        reviewList.clear();
         final int gameid = getIntent().getExtras().getInt("id");
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -194,14 +191,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -214,9 +211,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void jsoncallGamePopular(View view) {
-        lstReviews.clear();
+        reviewList.clear();
         final int gameid = getIntent().getExtras().getInt("id");
-        ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(jsonURL2, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -236,14 +233,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override

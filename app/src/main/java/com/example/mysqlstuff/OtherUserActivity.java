@@ -39,10 +39,10 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     private Session session;
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
-    private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
-    private String URL_JSON3 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
-    private String URL_JSON4 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulList.php";
+    private String reviewList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
+    private String reviewListLikes_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
+    private String followList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
+    private String helpfulList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulList.php";
     private String follow_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/userFollow0.php";
     private String helpful_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulUser.php";
     private JsonArrayRequest ArrayRequest ;
@@ -154,7 +154,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     private void jsoncall() {
         final int authorID = getIntent().getExtras().getInt("otherUserId");
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(reviewList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -196,7 +196,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     public void jsoncallOtherUserRecent(View view) {
         lstReviews.clear();
             final int authorID = getIntent().getExtras().getInt("otherUserId");
-            ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+            ArrayRequest = new JsonArrayRequest(reviewList_url, new Response.Listener<JSONArray>() {
                 @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -237,7 +237,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     public void jsoncallOtherUserPopular(View view) {
         lstReviews.clear();
         final int authorID = getIntent().getExtras().getInt("otherUserId");
-        ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(reviewListLikes_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -295,7 +295,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     }
 
     public void helpfulChecker (final int currentUserID, final int followedUserID) {
-        ArrayRequest = new JsonArrayRequest(URL_JSON4, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(helpfulList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -346,7 +346,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     }
 
     public void followChecker (final int currentUserID, final int followedUserID) {
-        ArrayRequest = new JsonArrayRequest(URL_JSON3, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(followList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;

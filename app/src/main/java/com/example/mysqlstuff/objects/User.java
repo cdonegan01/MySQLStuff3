@@ -5,7 +5,6 @@ import java.util.Date;
 public class User {
 
     String username;
-    String email;
     Date sessionExpiryDate;
     String bio;
     String profilePic_url;
@@ -15,9 +14,8 @@ public class User {
     public User(){
     }
 
-    public User(String username, String email, Date sessionExpiryDate, String bio, String profilePic_url, int followers, int userId) {
+    public User(String username, Date sessionExpiryDate, String bio, String profilePic_url, int followers, int userId) {
         this.username = username;
-        this.email = email;
         this.sessionExpiryDate = sessionExpiryDate;
         this.bio = bio;
         this.profilePic_url = profilePic_url;
@@ -29,20 +27,12 @@ public class User {
         this.username = username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setSessionExpiryDate(Date sessionExpiryDate) {
         this.sessionExpiryDate = sessionExpiryDate;
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public Date getSessionExpiryDate() {

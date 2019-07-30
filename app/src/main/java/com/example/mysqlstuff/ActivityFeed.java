@@ -33,7 +33,7 @@ public class ActivityFeed extends AppCompatActivity {
     private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList2.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
-    private List<Review> lstReviews;
+    private List<Review> reviewList;
     private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -85,7 +85,7 @@ public class ActivityFeed extends AppCompatActivity {
         String greeting = "Hey there, "+user.getUsername();
         TextView userIntroID = findViewById(R.id.userIntroID);
         userIntroID.setText(greeting);
-        lstReviews = new ArrayList<>();
+        reviewList = new ArrayList<>();
         recyclerView = findViewById(R.id.activityFeedRVId);
         jsoncall(user);
 
@@ -112,18 +112,18 @@ public class ActivityFeed extends AppCompatActivity {
                             review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                if (lstReviews.isEmpty()) {
+                if (reviewList.isEmpty()) {
                     TextView textView = findViewById(R.id.textView3);
                     textView.setText("You aren't following anyone yet!");
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override

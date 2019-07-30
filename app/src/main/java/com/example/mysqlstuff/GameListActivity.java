@@ -32,10 +32,10 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
 
     private Session session;
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/gamelist.php";
+    private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/gamelist.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
-    private List<Game> lstGame;
+    private List<Game> gameList;
     private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -87,7 +87,7 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
         final User user = session.getUserDetails();
-        lstGame = new ArrayList<>();
+        gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rv);
         jsoncall();
 
@@ -97,7 +97,7 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void jsoncall() {
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -109,16 +109,15 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
                         game.setTitle(jsonObject.getString("title"));
                         game.setReleaseYear(jsonObject.getString("release_year"));
                         game.setDeveloper(jsonObject.getString("developer"));
-                        game.setAverageRating(jsonObject.getString("average_rating"));
                         game.setDescription(jsonObject.getString("description"));
                         game.setImage_url(jsonObject.getString("cover_art"));
-                        lstGame.add(game);
+                        gameList.add(game);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstGame);
+                setRvadapter(gameList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -140,10 +139,10 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        lstGame.clear();
+        gameList.clear();
         final EditText searchData = findViewById(R.id.gameListSearchBar);
         final String searchInfo = searchData.getText().toString();
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -156,10 +155,9 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
                             game.setTitle(jsonObject.getString("title"));
                             game.setReleaseYear(jsonObject.getString("release_year"));
                             game.setDeveloper(jsonObject.getString("developer"));
-                            game.setAverageRating(jsonObject.getString("average_rating"));
                             game.setDescription(jsonObject.getString("description"));
                             game.setImage_url(jsonObject.getString("cover_art"));
-                            lstGame.add(game);
+                            gameList.add(game);
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -175,10 +173,9 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
                             game.setTitle(jsonObject.getString("title"));
                             game.setReleaseYear(jsonObject.getString("release_year"));
                             game.setDeveloper(jsonObject.getString("developer"));
-                            game.setAverageRating(jsonObject.getString("average_rating"));
                             game.setDescription(jsonObject.getString("description"));
                             game.setImage_url(jsonObject.getString("cover_art"));
-                            lstGame.add(game);
+                            gameList.add(game);
                         }
                     }
                     catch (JSONException e) {
@@ -186,7 +183,7 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
                     }
                     }
                 }
-                setRvadapter(lstGame);
+                setRvadapter(gameList);
             }
         }, new Response.ErrorListener() {
             @Override

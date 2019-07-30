@@ -2,6 +2,8 @@ package com.example.mysqlstuff.objects;
 
 public class Comment {
 
+
+
     private String userID;
     private String reviewID;
     private String userName;

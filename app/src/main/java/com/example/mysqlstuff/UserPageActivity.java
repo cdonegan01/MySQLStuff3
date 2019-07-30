@@ -37,11 +37,11 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
 
     private Session session;
 
-    private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
-    private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
+    private String reviewList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
+    private String reviewListLikes_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
-    private List<Review> lstReviews;
+    private List<Review> reviewList;
     private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -115,7 +115,7 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         ConstraintLayout constraintLayout1 = findViewById(R.id.constraintLayoutUser);
         constraintLayout1.setOnClickListener(this);
 
-        lstReviews = new ArrayList<>();
+        reviewList = new ArrayList<>();
         recyclerView = findViewById(R.id.userPageReviews);
         jsoncall();
     }
@@ -123,7 +123,7 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
     private void jsoncall() {
         User user = session.getUserDetails();
         final int authorID = user.getUserId();
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(reviewList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -143,14 +143,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
                             review.setHeading(jsonObject.getString("Heading"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -163,10 +163,10 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void jsoncallOtherUserRecent(View view) {
-        lstReviews.clear();
+        reviewList.clear();
         User user = session.getUserDetails();
         final int authorID = user.getUserId();
-        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(reviewList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -185,14 +185,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
                             review.setReview(jsonObject.getString("Review"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -205,10 +205,10 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void jsoncallOtherUserPopular(View view) {
-        lstReviews.clear();
+        reviewList.clear();
         User user = session.getUserDetails();
         final int authorID = user.getUserId();
-        ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(reviewListLikes_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -227,14 +227,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
                             review.setReview(jsonObject.getString("Review"));
                             review.setAuthorId(jsonObject.getInt("user_id"));
                             review.setGameId(jsonObject.getInt("id"));
-                            lstReviews.add(review);
+                            reviewList.add(review);
                         }
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
+                setRvadapter(reviewList);
             }
         }, new Response.ErrorListener() {
             @Override

@@ -8,29 +8,29 @@ import com.android.volley.toolbox.Volley;
 
 public class MySingleton {
 
-    private static MySingleton mInstance;
-    private RequestQueue mRequestQueue;
-    private static Context mCtx;
+    private static MySingleton mySingleton;
+    private RequestQueue requestQueue;
+    private static Context context;
 
     private MySingleton(Context context) {
-        mCtx = context;
-        mRequestQueue = getRequestQueue();
+        MySingleton.context = context;
+        requestQueue = getRequestQueue();
     }
 
     public static synchronized MySingleton getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new MySingleton(context);
+        if (mySingleton == null) {
+            mySingleton = new MySingleton(context);
         }
-        return mInstance;
+        return mySingleton;
     }
 
     private RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
+        if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
-        return mRequestQueue;
+        return requestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req) {

@@ -21,60 +21,86 @@ import java.util.List;
 
 public class ReviewAdapter2 extends RecyclerView.Adapter<ReviewAdapter2.MyViewHolder> {
 
-    private Context mContext;
-    private List<Review> mData;
+    /**
+     * Declaring Vars
+     */
+
+    private Context context;
+    private List<Review> reviews;
     RequestOptions options;
 
-    public ReviewAdapter2(Context mContext, List<Review> mData) {
-        this.mContext = mContext;
-        this.mData = mData;
+    public ReviewAdapter2(Context context, List<Review> reviews) {
+        this.context = context;
+        this.reviews = reviews;
         options = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
 
     }
+
+    /**
+     * Creates a view that holds the layout for the Review List on User Pages
+     * @param viewGroup
+     * @param i
+     * @return
+     */
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.review_list_user_layout,viewGroup, false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
         return new MyViewHolder(view);
     }
 
+    /**
+     * Applies the parameters of the Review object to the created viewholder and prepares the Intent for user interaction.
+     * @param myViewHolder
+     * @param i
+     */
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.gameNameTextView.setText(mData.get(i).getGameName());
-        myViewHolder.ratingTextView.setText(mData.get(i).getRating()+"/10");
-        myViewHolder.reviewTextView.setText(mData.get(i).getHeading());
-        Glide.with(mContext).load(mData.get(i).getGamePictureUrl()).apply(options).into(myViewHolder.gamePicture);
+        myViewHolder.gameNameTextView.setText(reviews.get(i).getGameName());
+        myViewHolder.ratingTextView.setText(reviews.get(i).getRating()+"/10");
+        myViewHolder.reviewTextView.setText(reviews.get(i).getHeading());
+        Glide.with(context).load(reviews.get(i).getGamePictureUrl()).apply(options).into(myViewHolder.gamePicture);
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mContext, ReviewActivity.class);
-                i.putExtra("gameTitle",mData.get(myViewHolder.getAdapterPosition()).getGameName());
-                i.putExtra("review",mData.get(myViewHolder.getAdapterPosition()).getReview());
-                i.putExtra("reviewId",mData.get(myViewHolder.getAdapterPosition()).getReviewId());
-                i.putExtra("authorID",mData.get(myViewHolder.getAdapterPosition()).getAuthorId());
-                i.putExtra("authorName",mData.get(myViewHolder.getAdapterPosition()).getAuthorName());
-                i.putExtra("authorPicture",mData.get(myViewHolder.getAdapterPosition()).getAuthorPictureUrl());
-                i.putExtra("gameId",mData.get(myViewHolder.getAdapterPosition()).getGameId());
-                i.putExtra("gamePicture",mData.get(myViewHolder.getAdapterPosition()).getGamePictureUrl());
-                i.putExtra("likes",mData.get(myViewHolder.getAdapterPosition()).getLikes());
-                i.putExtra("rating",mData.get(myViewHolder.getAdapterPosition()).getRating());
-                i.putExtra("heading",mData.get(myViewHolder.getAdapterPosition()).getHeading());
+                Intent i = new Intent(context, ReviewActivity.class);
+                i.putExtra("gameTitle", reviews.get(myViewHolder.getAdapterPosition()).getGameName());
+                i.putExtra("review", reviews.get(myViewHolder.getAdapterPosition()).getReview());
+                i.putExtra("reviewId", reviews.get(myViewHolder.getAdapterPosition()).getReviewId());
+                i.putExtra("authorID", reviews.get(myViewHolder.getAdapterPosition()).getAuthorId());
+                i.putExtra("authorName", reviews.get(myViewHolder.getAdapterPosition()).getAuthorName());
+                i.putExtra("authorPicture", reviews.get(myViewHolder.getAdapterPosition()).getAuthorPictureUrl());
+                i.putExtra("gameId", reviews.get(myViewHolder.getAdapterPosition()).getGameId());
+                i.putExtra("gamePicture", reviews.get(myViewHolder.getAdapterPosition()).getGamePictureUrl());
+                i.putExtra("likes", reviews.get(myViewHolder.getAdapterPosition()).getLikes());
+                i.putExtra("rating", reviews.get(myViewHolder.getAdapterPosition()).getRating());
+                i.putExtra("heading", reviews.get(myViewHolder.getAdapterPosition()).getHeading());
 
-                mContext.startActivity(i);
+                context.startActivity(i);
             }
         });
 
     }
 
+    /**
+     * Returns the size of the Review arraylist
+     * @return
+     */
+
     @Override
     public int getItemCount() {
-        return mData.size();
+        return reviews.size();
     }
+
+    /**
+     * Creates the view elements for each variable and assigns them to itemView objects in the layout file.
+     */
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

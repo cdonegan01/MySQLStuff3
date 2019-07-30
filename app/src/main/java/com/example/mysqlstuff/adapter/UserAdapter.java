@@ -21,58 +21,80 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
 
-    private Context mContext;
-    private List<otherUser> mData;
+    /**
+     * Declaring Vars
+     */
+
+    private Context context;
+    private List<otherUser> otherUsers;
     RequestOptions options;
 
-    public UserAdapter(Context mContext, List<otherUser> mData) {
-        this.mContext = mContext;
-        this.mData = mData;
+    public UserAdapter(Context context, List<otherUser> otherUsers) {
+        this.context = context;
+        this.otherUsers = otherUsers;
         options = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
 
     }
+
+    /**
+     * Creates a view that holds the layout for other Users in a list format
+     * @param viewGroup
+     * @param i
+     * @return
+     */
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.user_list_layout,viewGroup, false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
         return new MyViewHolder(view);
     }
 
+    /**
+     * Applies the parameters of the otherUser object to the created viewholder and prepares the Intent for user interaction.
+     * @param myViewHolder
+     * @param i
+     */
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.nameTextView.setText(mData.get(i).getOtherUsername());
-        myViewHolder.followerTextView.setText(mData.get(i).getOtherFollowers()+" Followers");
-        Glide.with(mContext).load(mData.get(i).getOtherProfilePic_url()).apply(options).into(myViewHolder.profilePicture);
+        myViewHolder.nameTextView.setText(otherUsers.get(i).getOtherUsername());
+        myViewHolder.followerTextView.setText(otherUsers.get(i).getOtherFollowers()+" Followers");
+        Glide.with(context).load(otherUsers.get(i).getOtherProfilePic_url()).apply(options).into(myViewHolder.profilePicture);
 
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mContext, OtherUserActivity.class);
-                i.putExtra("otherUserId",mData.get(myViewHolder.getAdapterPosition()).getOtherUserId());
-                i.putExtra("otherUsername",mData.get(myViewHolder.getAdapterPosition()).getOtherUsername());
-                i.putExtra("otherPronoun",mData.get(myViewHolder.getAdapterPosition()).getOtherPronoun());
-                i.putExtra("otherProfilePic",mData.get(myViewHolder.getAdapterPosition()).getOtherProfilePic_url());
-                i.putExtra("otherName",mData.get(myViewHolder.getAdapterPosition()).getOtherName());
-                i.putExtra("otherLocation",mData.get(myViewHolder.getAdapterPosition()).getOtherLocation());
-                i.putExtra("otherFollowers",mData.get(myViewHolder.getAdapterPosition()).getOtherFollowers());
-                i.putExtra("otherEmail",mData.get(myViewHolder.getAdapterPosition()).getOtherEmail());
-                i.putExtra("otherBio",mData.get(myViewHolder.getAdapterPosition()).getOtherBio());
+                Intent i = new Intent(context, OtherUserActivity.class);
+                i.putExtra("otherUserId", otherUsers.get(myViewHolder.getAdapterPosition()).getOtherUserId());
+                i.putExtra("otherUsername", otherUsers.get(myViewHolder.getAdapterPosition()).getOtherUsername());
+                i.putExtra("otherProfilePic", otherUsers.get(myViewHolder.getAdapterPosition()).getOtherProfilePic_url());
+                i.putExtra("otherFollowers", otherUsers.get(myViewHolder.getAdapterPosition()).getOtherFollowers());
+                i.putExtra("otherBio", otherUsers.get(myViewHolder.getAdapterPosition()).getOtherBio());
 
-                mContext.startActivity(i);
+                context.startActivity(i);
             }
         });
 
     }
 
+    /**
+     * Returns the size of the otherUsers arraylist
+     * @return
+     */
+
     @Override
     public int getItemCount() {
-        return mData.size();
+        return otherUsers.size();
     }
+
+    /**
+     * Creates the view elements for each variable and assigns them to itemView objects in the layout file.
+     */
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

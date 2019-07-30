@@ -31,7 +31,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     private Context context;
     private List<Comment> comments;
     RequestOptions options;
-    private JsonArrayRequest ArrayRequest;
 
     /**
      * Constructor for CommentAdapter

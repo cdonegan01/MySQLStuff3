@@ -6,19 +6,17 @@ public class Game {
     private String title;
     private String releaseYear;
     private String developer;
-    private String averageRating;
     private String description;
     private String image_url;
 
     public Game() {
     }
 
-    public Game(int gameId, String title, String releaseYear, String developer, String averageRating, String description, String image_url) {
+    public Game(int gameId, String title, String releaseYear, String developer, String description, String image_url) {
         this.gameId = gameId;
         this.title = title;
         this.releaseYear = releaseYear;
         this.developer = developer;
-        this.averageRating = averageRating;
         this.description = description;
         this.image_url = image_url;
     }
@@ -53,14 +51,6 @@ public class Game {
 
     public void setDeveloper(String developer) {
         this.developer = developer;
-    }
-
-    public String getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(String averageRating) {
-        this.averageRating = averageRating;
     }
 
     public String getDescription() {

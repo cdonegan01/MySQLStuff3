@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.mysqlstuff.objects.Constants;
 import com.example.mysqlstuff.objects.User;
 import com.example.mysqlstuff.objects.otherUser;
 
@@ -19,23 +20,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Session {
-    private static final String PREF_NAME = "UserSession";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_EXPIRES = "expires";
-    private static final String KEY_ID = "userId";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_BIO = "bio";
-    private static final String KEY_AVATAR = "avatar";
-    private static final String KEY_FOLLOWERS = "followers";
-    private static final String KEY_TYPE = "type";
-    private static final String KEY_EMPTY = "";
     private Context mContext;
     private SharedPreferences.Editor mEditor;
     private SharedPreferences mPreferences;
 
     public Session(Context mContext) {
         this.mContext = mContext;
-        mPreferences = mContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        mPreferences = mContext.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         this.mEditor = mPreferences.edit();
     }
 
@@ -45,16 +36,16 @@ public class Session {
      * @param username
      */
     public void loginUser(final String username, final int id, final String bio, final String avatar, final int followers, final int type) {
-        mEditor.putString(KEY_USERNAME, username);
-        mEditor.putInt(KEY_ID, id);
-        mEditor.putString(KEY_BIO, bio);
-        mEditor.putString(KEY_AVATAR, avatar);
-        mEditor.putInt(KEY_FOLLOWERS, followers);
-        mEditor.putInt(KEY_TYPE, type);
+        mEditor.putString(Constants.USERNAME, username);
+        mEditor.putInt(Constants.USERID, id);
+        mEditor.putString(Constants.BIO, bio);
+        mEditor.putString(Constants.AVATAR, avatar);
+        mEditor.putInt(Constants.FOLLOWERS, followers);
+        mEditor.putInt(Constants.TYPE, type);
         Date date = new Date();
         //Set user session for next 7 days
-        long millis = date.getTime() + (1 * 24 * 60 * 60 * 1000);
-        mEditor.putLong(KEY_EXPIRES, millis);
+        long millis = date.getTime() + (24 * 60 * 60 * 1000);
+        mEditor.putLong(Constants.EXPIRATION, millis);
         mEditor.commit();
     }
 
@@ -65,7 +56,7 @@ public class Session {
      */
     public boolean isLoggedIn() {
 
-        long millis = mPreferences.getLong(KEY_EXPIRES, 0);
+        long millis = mPreferences.getLong(Constants.EXPIRATION, 0);
 
         /* If shared preferences does not have a value
          then user is not logged in
@@ -90,13 +81,12 @@ public class Session {
             return null;
         }
         User user = new User();
-        user.setUsername(mPreferences.getString(KEY_USERNAME, KEY_EMPTY));
-        user.setUserId(mPreferences.getInt(KEY_ID, 0));
-        user.setEmail(mPreferences.getString(KEY_EMAIL, KEY_EMPTY));
-        user.setBio(mPreferences.getString(KEY_BIO, KEY_EMPTY));
-        user.setProfilePic_url(mPreferences.getString(KEY_AVATAR, KEY_EMPTY));
-        user.setFollowers(mPreferences.getInt(KEY_FOLLOWERS,0));
-        user.setSessionExpiryDate(new Date(mPreferences.getLong(KEY_EXPIRES, 0)));
+        user.setUsername(mPreferences.getString(Constants.USERNAME, Constants.NULL));
+        user.setUserId(mPreferences.getInt(Constants.USERID, 0));
+        user.setBio(mPreferences.getString(Constants.BIO, Constants.NULL));
+        user.setProfilePic_url(mPreferences.getString(Constants.AVATAR, Constants.NULL));
+        user.setFollowers(mPreferences.getInt(Constants.FOLLOWERS,0));
+        user.setSessionExpiryDate(new Date(mPreferences.getLong(Constants.EXPIRATION, 0)));
 
         return user;
     }
