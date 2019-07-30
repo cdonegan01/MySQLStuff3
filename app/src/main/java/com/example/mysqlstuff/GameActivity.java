@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mysqlstuff.adapter.ReviewAdapter1;
 import com.example.mysqlstuff.objects.Review;
+import com.example.mysqlstuff.objects.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Session session;
 
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
+    private String URL_JSON2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewListLikes.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> lstReviews;
@@ -80,6 +82,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
+        final User user = session.getUserDetails();
 
         String name  = getIntent().getExtras().getString("title");
         String description = getIntent().getExtras().getString("description");
@@ -124,6 +133,90 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void jsoncall() {
         final int gameid = getIntent().getExtras().getInt("id");
         ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                for (int i = 0 ; i<response.length();i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        if (jsonObject.getInt("Game") == gameid)  {
+                            Review review = new Review();
+                            review.setReviewId(jsonObject.getInt("Review_id"));
+                            review.setGameName(jsonObject.getString("title"));
+                            review.setAuthorName(jsonObject.getString("Username"));
+                            review.setAuthorPictureUrl(jsonObject.getString("Avatar"));
+                            review.setGamePictureUrl(jsonObject.getString("cover_art"));
+                            review.setLikes(jsonObject.getString("Likes"));
+                            review.setRating(jsonObject.getString("Rating"));
+                            review.setReview(jsonObject.getString("Review"));
+                            review.setHeading(jsonObject.getString("Heading"));
+                            review.setAuthorId(jsonObject.getInt("user_id"));
+                            review.setGameId(jsonObject.getInt("id"));
+                            lstReviews.add(review);
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setRvadapter(lstReviews);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue = Volley.newRequestQueue(GameActivity.this);
+        requestQueue.add(ArrayRequest);
+    }
+
+    public void jsoncallGameRecent(View view) {
+        lstReviews.clear();
+        final int gameid = getIntent().getExtras().getInt("id");
+        ArrayRequest = new JsonArrayRequest(URL_JSON, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                for (int i = 0 ; i<response.length();i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        if (jsonObject.getInt("Game") == gameid)  {
+                            Review review = new Review();
+                            review.setReviewId(jsonObject.getInt("Review_id"));
+                            review.setGameName(jsonObject.getString("title"));
+                            review.setAuthorName(jsonObject.getString("Username"));
+                            review.setAuthorPictureUrl(jsonObject.getString("Avatar"));
+                            review.setGamePictureUrl(jsonObject.getString("cover_art"));
+                            review.setLikes(jsonObject.getString("Likes"));
+                            review.setRating(jsonObject.getString("Rating"));
+                            review.setReview(jsonObject.getString("Review"));
+                            review.setHeading(jsonObject.getString("Heading"));
+                            review.setAuthorId(jsonObject.getInt("user_id"));
+                            review.setGameId(jsonObject.getInt("id"));
+                            lstReviews.add(review);
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setRvadapter(lstReviews);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue = Volley.newRequestQueue(GameActivity.this);
+        requestQueue.add(ArrayRequest);
+    }
+
+    public void jsoncallGamePopular(View view) {
+        lstReviews.clear();
+        final int gameid = getIntent().getExtras().getInt("id");
+        ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;

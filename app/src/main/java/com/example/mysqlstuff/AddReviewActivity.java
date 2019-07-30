@@ -97,6 +97,11 @@ public class AddReviewActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
         final User user = session.getUserDetails();
 
         String name  = getIntent().getExtras().getString("title");

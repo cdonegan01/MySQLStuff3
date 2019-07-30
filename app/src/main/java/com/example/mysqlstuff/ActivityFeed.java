@@ -30,12 +30,10 @@ public class ActivityFeed extends AppCompatActivity {
     private Session session;
     private User user = new User();
 
-    private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
-    private String jsonURL2 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList.php";
+    private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList2.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> lstReviews;
-    private List<Integer> following;
     private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,19 +76,22 @@ public class ActivityFeed extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
         User user = session.getUserDetails();
         String greeting = "Hey there, "+user.getUsername();
         TextView userIntroID = findViewById(R.id.userIntroID);
         userIntroID.setText(greeting);
         lstReviews = new ArrayList<>();
-        following = new ArrayList<>();
         recyclerView = findViewById(R.id.activityFeedRVId);
-        followGet();
-        jsoncall();
+        jsoncall(user);
 
     }
 
-    private void jsoncall() {
+    private void jsoncall(final User user) {
         ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -98,7 +99,7 @@ public class ActivityFeed extends AppCompatActivity {
                 for (int i = 0 ; i<response.length();i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        if (following.contains(jsonObject.getInt("user_id"))) {
+                        if (jsonObject.getInt("User") == user.getUserId()) {
                             Review review = new Review();
                             review.setReviewId(jsonObject.getInt("Review_id"));
                             review.setGameName(jsonObject.getString("title"));
@@ -118,33 +119,9 @@ public class ActivityFeed extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                setRvadapter(lstReviews);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue = Volley.newRequestQueue(ActivityFeed.this);
-        requestQueue.add(ArrayRequest);
-    }
-
-    private void followGet() {
-        ArrayRequest = new JsonArrayRequest(jsonURL2, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                JSONObject jsonObject = null;
-                for (int i = 0 ; i<response.length();i++) {
-                    try {
-                        jsonObject = response.getJSONObject(i);
-                        if (jsonObject.getInt("User") == user.getUserId()) {
-                            following.add(jsonObject.getInt("FollowedUser"));
-                        }
-                    }
-                    catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                if (lstReviews.isEmpty()) {
+                    TextView textView = findViewById(R.id.textView3);
+                    textView.setText("You aren't following anyone yet!");
                 }
                 setRvadapter(lstReviews);
             }

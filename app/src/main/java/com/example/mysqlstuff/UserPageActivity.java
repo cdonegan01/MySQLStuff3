@@ -84,6 +84,11 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
         User user = session.getUserDetails();
 
         String name  = user.getUsername();

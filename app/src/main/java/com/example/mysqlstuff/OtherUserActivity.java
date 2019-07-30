@@ -92,6 +92,11 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
         final User user = session.getUserDetails();
         String name  = getIntent().getExtras().getString("otherUsername");
         String bio = getIntent().getExtras().getString("otherBio");
@@ -333,6 +338,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         new Backgroundworker(this).execute("userInteract", helpful_url, currentPost, followPost);
         Toast.makeText(getApplicationContext(),
                 "You have marked this user as helpful!", Toast.LENGTH_SHORT).show();
+        helpfulChecker(currentUserID, followedUserID);
         View a = findViewById(R.id.helpfulButton);
         a.setVisibility(View.GONE);
         View b = findViewById(R.id.helpfulUserTV);

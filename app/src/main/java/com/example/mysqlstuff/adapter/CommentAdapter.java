@@ -54,7 +54,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
         @Override
         public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-
             myViewHolder.usernameTextView.setText(mData.get(i).getUserName());
             myViewHolder.commentTextView.setText(mData.get(i).getComment());
             Glide.with(mContext).load(mData.get(i).getUserAvatarURL()).apply(options).into(myViewHolder.gameThumbnail);

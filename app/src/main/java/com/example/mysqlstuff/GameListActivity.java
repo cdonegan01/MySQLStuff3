@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mysqlstuff.adapter.GameAdapter;
 import com.example.mysqlstuff.objects.Game;
+import com.example.mysqlstuff.objects.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +80,13 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_game_list);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
+        final User user = session.getUserDetails();
         lstGame = new ArrayList<>();
         recyclerView = findViewById(R.id.rv);
         jsoncall();

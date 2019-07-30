@@ -101,6 +101,11 @@ public class ReviewActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         session = new Session(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+            Intent logout = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logout);
+            finish();
+        }
         final User user = session.getUserDetails();
 
         String gameTitle  = getIntent().getExtras().getString("gameTitle");
@@ -130,8 +135,7 @@ public class ReviewActivity extends AppCompatActivity {
         tv_rating.setText(rating+"/10");
 
         ImageView likeButton = findViewById(R.id.likeButtonID);
-
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
         // set image using Glide
         Glide.with(this).load(image_url).apply(requestOptions).into(profilePicImg);
         Glide.with(this).load(gameImage).apply(requestOptions).into(gamePicImg);
