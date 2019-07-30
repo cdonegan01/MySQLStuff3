@@ -2,6 +2,16 @@ package com.example.mysqlstuff.objects;
 
 public class Game {
 
+    /**
+     * Declaring Vars
+     * @param gameId
+     * @param title
+     * @param releaseYear
+     * @param developer
+     * @param description
+     * @param image_url
+     */
+
     private int gameId;
     private String title;
     private String releaseYear;
@@ -9,8 +19,22 @@ public class Game {
     private String description;
     private String image_url;
 
+    /**
+     * Default constructor for Game object
+     */
+
     public Game() {
     }
+
+    /**
+     * Constructor for Game Object
+     * @param gameId
+     * @param title
+     * @param releaseYear
+     * @param developer
+     * @param description
+     * @param image_url
+     */
 
     public Game(int gameId, String title, String releaseYear, String developer, String description, String image_url) {
         this.gameId = gameId;

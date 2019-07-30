@@ -2,6 +2,21 @@ package com.example.mysqlstuff.objects;
 
 public class Review {
 
+    /**
+     * Declaring Vars
+     * @param reviewId
+     * @param gameName
+     * @param authorName
+     * @param authorPictureUrl
+     * @param rating
+     * @param review
+     * @param gamePictureUrl
+     * @param likes
+     * @param heading
+     * @param authorId
+     * @param gameId
+     */
+
     private int reviewId;
     private String gameName;
     private String authorName;
@@ -14,8 +29,27 @@ public class Review {
     private int authorId;
     private int gameId;
 
+    /**
+     * Default Constructor for Review Object
+     */
+
     public Review() {
     }
+
+    /**
+     * Constructor for Review Object
+     * @param reviewId
+     * @param gameName
+     * @param authorName
+     * @param authorPictureUrl
+     * @param rating
+     * @param review
+     * @param gamePictureUrl
+     * @param likes
+     * @param heading
+     * @param authorId
+     * @param gameId
+     */
 
     public Review(int reviewId, String gameName, String authorName, String authorPictureUrl, String rating, String review, String gamePictureUrl, String likes, String heading, int authorId, int gameId) {
         this.reviewId = reviewId;
@@ -30,6 +64,11 @@ public class Review {
         this.authorId = authorId;
         this.gameId = gameId;
     }
+
+    /**
+     * Setters and Getters for Review object
+     * @return
+     */
 
     public int getReviewId() {
         return reviewId;

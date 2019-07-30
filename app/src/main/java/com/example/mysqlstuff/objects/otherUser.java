@@ -2,14 +2,36 @@ package com.example.mysqlstuff.objects;
 
 public class otherUser {
 
+    /**
+     * Declaring Vars
+     * @param otherUserID
+     * @param otherUsername
+     * @param otherBio
+     * @param otherProfilePic_url
+     * @param otherFollowers
+     */
+
     private int otherUserId;
     private String otherUsername;
     private String otherBio;
     private String otherProfilePic_url;
     private int otherFollowers;
 
+    /**
+     * Default Constructor for OtherUser object
+     */
+
     public otherUser() {
     }
+
+    /**
+     * Constructor for OtherUser Object
+     * @param otherUserID
+     * @param otherUsername
+     * @param otherBio
+     * @param otherProfilePic_url
+     * @param otherFollowers
+     */
 
     public otherUser(int otherUserID, String otherUsername, String otherBio, String otherProfilePic_url, int otherFollowers) {
         this.otherUserId = otherUserID;
@@ -18,6 +40,11 @@ public class otherUser {
         this.otherProfilePic_url = otherProfilePic_url;
         this.otherFollowers = otherFollowers;
     }
+
+    /**
+     * Setters and Getters for OtherUser object
+     * @return
+     */
 
     public int getOtherUserId() {
         return otherUserId;

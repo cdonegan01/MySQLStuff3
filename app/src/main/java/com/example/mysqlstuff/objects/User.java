@@ -4,6 +4,16 @@ import java.util.Date;
 
 public class User {
 
+    /**
+     * Declaring Vars for the User Object
+     * @param username
+     * @param sessionExpiryDate
+     * @param bio
+     * @param profilePic_url
+     * @param followers
+     * @param userId
+     */
+
     String username;
     Date sessionExpiryDate;
     String bio;
@@ -11,8 +21,22 @@ public class User {
     int followers;
     int userId;
 
+    /**
+     * Default constructor for the User Object
+     */
+
     public User(){
     }
+
+    /**
+     * Constructor for the User Object
+     * @param username
+     * @param sessionExpiryDate
+     * @param bio
+     * @param profilePic_url
+     * @param followers
+     * @param userId
+     */
 
     public User(String username, Date sessionExpiryDate, String bio, String profilePic_url, int followers, int userId) {
         this.username = username;
@@ -22,6 +46,10 @@ public class User {
         this.followers = followers;
         this.userId = userId;
     }
+
+    /**
+     * Getters and Setters for the User Object 
+     */
 
     public void setUsername(String username) {
         this.username = username;

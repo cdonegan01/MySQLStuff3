@@ -2,7 +2,14 @@ package com.example.mysqlstuff.objects;
 
 public class Comment {
 
-
+    /**
+     * Declaring Vars
+     * @param userID
+     * @param reviewID
+     * @param userName
+     * @param userAvatarURL
+     * @param comment
+     */
 
     private String userID;
     private String reviewID;
@@ -10,9 +17,21 @@ public class Comment {
     private String userAvatarURL;
     private String comment;
 
+
+    /**
+     * Default Constructor for Comment Object
+     */
     public Comment() {
     }
 
+    /**
+     * Constructor for Comment Objects
+     * @param userID
+     * @param reviewID
+     * @param userName
+     * @param userAvatarURL
+     * @param comment
+     */
     public Comment(String userID, String reviewID, String userName, String userAvatarURL, String comment) {
         this.userID = userID;
         this.reviewID = reviewID;
@@ -20,6 +39,10 @@ public class Comment {
         this.userAvatarURL = userAvatarURL;
         this.comment = comment;
     }
+
+    /**
+     * Getters and Setters for Comment Class
+     */
 
     public String getUserID() {
         return userID;

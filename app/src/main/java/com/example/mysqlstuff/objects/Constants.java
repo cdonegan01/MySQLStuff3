@@ -1,6 +1,11 @@
 package com.example.mysqlstuff.objects;
 
 public class Constants {
+
+    /**
+     * Declaring Constant Vars
+     */
+
     public static final String STATUS = "status";
     public static final String MESSAGE = "message";
     public static final String HEADING = "Heading";
@@ -13,7 +18,6 @@ public class Constants {
     public static final String PASSWORD = "password";
     public static final String BIO = "bio";
     public static final String COMMENT = "Comment";
-    public static final String REVIEw = "Review";
     public static final String PREF_NAME = "UserSession";
     public static final String EXPIRATION = "expires";
     public static final String USERID = "userId";
