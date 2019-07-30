@@ -10,61 +10,87 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mysqlstuff.OtherUserActivity;
 import com.example.mysqlstuff.R;
 import com.example.mysqlstuff.objects.Comment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
+
+/**
+ * This class applies the Comment format to RecyclerViews that display comments.
+ */
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder> {
 
-        private Context mContext;
-        private List<Comment> mData;
-        RequestOptions options;
-        private JsonArrayRequest ArrayRequest;
-        private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/helpfulList.php";
+    /**
+     * Declaring Vars
+     */
 
-    public CommentAdapter(Context mContext, List<Comment> mData) {
-            this.mContext = mContext;
-            this.mData = mData;
+    private Context context;
+    private List<Comment> comments;
+    RequestOptions options;
+    private JsonArrayRequest ArrayRequest;
+
+    /**
+     * Constructor for CommentAdapter
+     * @param context
+     * @param comments
+     */
+
+    public CommentAdapter(Context context, List<Comment> comments) {
+            this.context = context;
+            this.comments = comments;
             options = new RequestOptions().centerCrop().placeholder(R.drawable.ic_account_box_black_24dp).error(R.drawable.ic_account_box_black_24dp);
 
         }
 
-        @NonNull
+    /**
+     * Creates a view that holds the layout for Comments
+     * @param viewGroup
+     * @param i
+     * @return
+     */
+
+    @NonNull
         @Override
         public CommentAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view;
-            LayoutInflater inflater = LayoutInflater.from(mContext);
+            LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.comment_list_layout,viewGroup, false);
             final CommentAdapter.MyViewHolder viewHolder = new CommentAdapter.MyViewHolder(view);
             return new CommentAdapter.MyViewHolder(view);
         }
 
-        @Override
+    /**
+     * Applies the parameters of the Comment object to the created viewholder.
+     * @param myViewHolder
+     * @param i
+     */
+
+    @Override
         public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-            myViewHolder.usernameTextView.setText(mData.get(i).getUserName());
-            myViewHolder.commentTextView.setText(mData.get(i).getComment());
-            Glide.with(mContext).load(mData.get(i).getUserAvatarURL()).apply(options).into(myViewHolder.gameThumbnail);
+            myViewHolder.usernameTextView.setText(comments.get(i).getUserName());
+            myViewHolder.commentTextView.setText(comments.get(i).getComment());
+            Glide.with(context).load(comments.get(i).getUserAvatarURL()).apply(options).into(myViewHolder.gameThumbnail);
         }
 
-        @Override
+    /**
+     * Returns the size of the Comments arraylist
+     * @return
+     */
+
+    @Override
         public int getItemCount() {
-            return mData.size();
+            return comments.size();
         }
 
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Creates the view elements for each variable and assigns them to an itemView objects in the layout file.
+     */
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
             TextView usernameTextView;
             TextView commentTextView;
