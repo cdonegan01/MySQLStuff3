@@ -20,6 +20,11 @@ import org.json.JSONObject;
 
 
 public class RegisterActivity extends AppCompatActivity {
+
+    /**
+     * Declaring Vars and Lists
+     */
+
     private EditText etUsername;
     private EditText etPassword;
     private EditText etConfirmPassword;
@@ -31,6 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String register_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/register2.php";
     private Session session;
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +98,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Launch Dashboard Activity on Successful Sign Up
+     * Launches Activity Feed page on successful registration.
      */
-    private void loadDashboard() {
+    private void goToActivityFeed() {
         Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
         startActivity(i);
         finish();
 
     }
+
+    /**
+     * Registers a brand new account on the system by posting the inputted
+     * data to a PHP form.
+     */
 
     private void registerUser() {
         displayLoader();
@@ -118,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 //Set the user session
                                 session.loginUser(username, response.getInt("userId"), bio, response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
-                                loadDashboard();
+                                goToActivityFeed();
 
                             }else if(response.getInt(Constants.STATUS) == 1){
                                 //Display error message if username is already taken
@@ -152,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Validates inputs and shows error if any
+     * Validates inputs and shows error if any exist
      * @return
      */
     private boolean validateInputs() {

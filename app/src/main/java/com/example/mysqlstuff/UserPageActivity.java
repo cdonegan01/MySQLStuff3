@@ -35,6 +35,10 @@ import java.util.List;
 
 public class UserPageActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
 
     private String reviewList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
@@ -43,6 +47,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
     private RequestQueue requestQueue ;
     private List<Review> reviewList;
     private RecyclerView recyclerView;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -59,7 +71,7 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(i);
                     break;
                 case R.id.nav_userPage:
-                    i = new Intent(getApplicationContext(), UserListActivity.class);
+                    i = new Intent(getApplicationContext(), UserPageActivity.class);
                     startActivity(i);
                     break;
                 case R.id.nav_userSearch:
@@ -76,6 +88,12 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
             return false;
         }
     };
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +113,6 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         String bio = user.getBio();
         String image_url = user.getProfilePic_url();
         int followers = user.getFollowers();
-        //String helpful = "Helpful Score: "+getIntent().getExtras().getString("otherHelpful");
         int authorID = user.getUserId();
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.otherUserName);
@@ -119,6 +136,13 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         recyclerView = findViewById(R.id.userPageReviews);
         jsoncall();
     }
+
+    /**
+     * Retrieves data from the database, stores data in an object of type
+     * "Review" assigns objects to an array of that type, then calls the
+     * setRVadapter method for this class. Only reviews written by the
+     * current user are found here.
+     */
 
     private void jsoncall() {
         User user = session.getUserDetails();
@@ -162,6 +186,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         requestQueue.add(ArrayRequest);
     }
 
+    /**
+     * Upon user tapping the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Review", then calls the setRVadapter method for this class.
+     * Only reviews written by the current user are added to the array. Results are
+     * ordered from newest to oldest.
+     * @param view
+     */
+
     public void jsoncallOtherUserRecent(View view) {
         reviewList.clear();
         User user = session.getUserDetails();
@@ -203,6 +235,14 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         requestQueue = Volley.newRequestQueue(UserPageActivity.this);
         requestQueue.add(ArrayRequest);
     }
+
+    /**
+     * Upon user tapping the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Review", then calls the setRVadapter method for this class.
+     * Only reviews written by the current user are added to the array. Results are
+     * ordered from most likes to least likes.
+     * @param view
+     */
 
     public void jsoncallOtherUserPopular(View view) {
         reviewList.clear();
@@ -246,16 +286,17 @@ public class UserPageActivity extends AppCompatActivity implements View.OnClickL
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Review> lstReviews) {
-        ReviewAdapter2 myAdapter = new ReviewAdapter2(this,lstReviews) ;
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param reviewList
+     */
+
+    public void setRvadapter (List<Review> reviewList) {
+        ReviewAdapter2 myAdapter = new ReviewAdapter2(this,reviewList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 
-    }
-
-    public void goToUserList(View view) {
-        Intent intent = new Intent(this, UserListActivity.class);
-        startActivity(intent);
     }
 
     public void onClick(View view) {

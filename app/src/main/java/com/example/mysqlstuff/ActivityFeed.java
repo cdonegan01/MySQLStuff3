@@ -30,11 +30,23 @@ public class ActivityFeed extends AppCompatActivity {
     private Session session;
     private User user = new User();
 
-    private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList2.php";
+    /**
+     * Declaring Vars and Lists
+     */
+
+    private String followList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/followList2.php";
     private JsonArrayRequest ArrayRequest ;
     private RequestQueue requestQueue ;
     private List<Review> reviewList;
     private RecyclerView recyclerView;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,6 +81,12 @@ public class ActivityFeed extends AppCompatActivity {
         }
     };
 
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +109,14 @@ public class ActivityFeed extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Review", then calls the
+     * setRVadapter method for this class.
+     * @param user
+     */
+
     private void jsoncall(final User user) {
-        ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
+        ArrayRequest = new JsonArrayRequest(followList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
@@ -135,8 +159,14 @@ public class ActivityFeed extends AppCompatActivity {
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Review> lstReviews) {
-        ReviewAdapter3 myAdapter = new ReviewAdapter3(this,lstReviews) ;
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param reviewList
+     */
+
+    public void setRvadapter (List<Review> reviewList) {
+        ReviewAdapter3 myAdapter = new ReviewAdapter3(this,reviewList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 

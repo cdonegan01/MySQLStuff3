@@ -30,6 +30,10 @@ import java.util.List;
 
 public class GameListActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
 
     private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/gamelist.php";
@@ -37,6 +41,14 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
     private RequestQueue requestQueue ;
     private List<Game> gameList;
     private RecyclerView recyclerView;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,7 +83,11 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
-
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +111,11 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
         constraintLayout3.setOnClickListener(this);
 
     }
+
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Game", then calls the
+     * setRVadapter method for this class.
+     */
 
     private void jsoncall() {
         ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
@@ -129,13 +150,26 @@ public class GameListActivity extends AppCompatActivity implements View.OnClickL
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Game> lstGame) {
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param gameList
+     */
 
-        GameAdapter myAdapter = new GameAdapter(this,lstGame) ;
+    public void setRvadapter (List<Game> gameList) {
+
+        GameAdapter myAdapter = new GameAdapter(this,gameList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 
     }
+
+    /**
+     * Upon a user pressing the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Review", then calls the setRVadapter method for this class. Only
+     * games that match the search criteria are assigned to the array.
+     * @param view
+     */
 
     @Override
     public void onClick(View view) {

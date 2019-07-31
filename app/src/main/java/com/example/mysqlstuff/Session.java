@@ -20,6 +20,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Session {
+
+    /**
+     * Declaring Vars
+     */
+
     private Context mContext;
     private SharedPreferences.Editor mEditor;
     private SharedPreferences mPreferences;

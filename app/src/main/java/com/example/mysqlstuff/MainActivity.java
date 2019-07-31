@@ -21,6 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
+
+    /**
+     * Declaring Vars and Lists
+     */
+
     private EditText UsernameEt;
     private EditText PasswordEt;
     private String username;
@@ -28,6 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
     private ProgressDialog pDialog;
     private String login_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/login2.php";
     private Session session;
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         session = new Session(getApplicationContext());
 
         if(session.isLoggedIn()){
-            loadDashboard();
+            Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
+            startActivity(i);
+            finish();
         }
 
         UsernameEt = (EditText)findViewById(R.id.usernameText);
@@ -64,34 +77,19 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         });
     }
 
-    public void sendMessage(View view) {
+    /**
+     * Sends the user to the Register page when they use the corresponding button.
+     * @param view
+     */
+
+    public void goToRegister(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
 
     }
 
-    public void goToUserList(View view) {
-        Intent intent = new Intent(this, UserListActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToGameList(View view) {
-        Intent intent = new Intent(this, GameListActivity.class);
-        startActivity(intent);
-    }
-
     /**
-     * Launch Dashboard Activity on Successful Login
-     */
-    private void loadDashboard() {
-        Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
-        startActivity(i);
-        finish();
-
-    }
-
-    /**
-     * Display Progress bar while Logging in
+     * Displays Progress bar while Logging in
      */
 
     private void displayLoader() {
@@ -102,6 +100,12 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
         pDialog.show();
 
     }
+
+    /**
+     * Takes the inputted information for the user and uses that to attempt to log them in
+     * to the system. If the user is successful, they are navigated to the ActivityFeed
+     * page. Otherwise, an error is displayed.
+     */
 
     private void login() {
         displayLoader();
@@ -123,8 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                             if (response.getInt(Constants.MESSAGE) == 0) {
                                 session.loginUser(username, response.getInt("userId"), response.getString("bio"), response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
-                                loadDashboard();
-
+                                Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
+                                startActivity(i);
+                                finish();
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         response.getString(Constants.MESSAGE), Toast.LENGTH_SHORT).show();

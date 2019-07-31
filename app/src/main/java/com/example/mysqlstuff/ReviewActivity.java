@@ -39,6 +39,10 @@ import java.util.List;
 
 public class ReviewActivity extends AppCompatActivity {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
     private ProgressDialog pDialog;
     private String URL_JSON = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/commentList.php";
@@ -53,6 +57,14 @@ public class ReviewActivity extends AppCompatActivity {
     private String currentUser;
     private String currentReview;
     private String comment;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -86,6 +98,12 @@ public class ReviewActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +186,12 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Upon user tapping the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Comment", then calls the setRVadapter method for this class.
+     * Only comments that match the current "ReviewID" are added to the array.
+     */
+
     private void jsoncall() {
         lstComments.clear();
         final int reviewID = getIntent().getExtras().getInt("reviewId");
@@ -203,12 +227,23 @@ public class ReviewActivity extends AppCompatActivity {
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Comment> lstComments) {
-        CommentAdapter myAdapter = new CommentAdapter(this,lstComments) ;
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param commentList
+     */
+
+    public void setRvadapter (List<Comment> commentList) {
+        CommentAdapter myAdapter = new CommentAdapter(this,commentList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
-
     }
+
+    /**
+     * Adds a Like assigned to the current review to the database from the current user
+     * @param currentUserID
+     * @param reviewID
+     */
 
     public void likeReview (int currentUserID, int reviewID) {
         String likerPost = Integer.toString(currentUserID);
@@ -221,6 +256,12 @@ public class ReviewActivity extends AppCompatActivity {
         View b = findViewById(R.id.likedButtonID);
         b.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Checks to make sure the current user has not already liked the current review
+     * @param currentUserID
+     * @param reviewId
+     */
 
     public void likeChecker (final int currentUserID, final int reviewId) {
         ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
@@ -259,6 +300,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves the number of likes the current review has from the database
+     * @param reviewId
+     */
+
     public void likeGetter (final int reviewId) {
         ArrayRequest = new JsonArrayRequest(URL_JSON2, new Response.Listener<JSONArray>() {
             @Override
@@ -295,6 +341,13 @@ public class ReviewActivity extends AppCompatActivity {
         requestQueue.add(ArrayRequest);
 
     }
+
+    /**
+     * Posts a comment to the database for the current review
+     * @param author
+     * @param review
+     * @param comment
+     */
 
     public void postComment(String author, String review, String comment) {
         displayLoader();
@@ -347,6 +400,10 @@ public class ReviewActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
 
+    /**
+     * Displays Progress bar while adding comment
+     */
+
     private void displayLoader() {
         pDialog = new ProgressDialog(ReviewActivity.this);
         pDialog.setMessage("Adding Comment...Please wait...");
@@ -355,6 +412,11 @@ public class ReviewActivity extends AppCompatActivity {
         pDialog.show();
 
     }
+
+    /**
+     * Validates inputs and shows error if any exist
+     * @return
+     */
 
     private boolean validateInputs() {
         if (Constants.NULL.equals(commentField)) {

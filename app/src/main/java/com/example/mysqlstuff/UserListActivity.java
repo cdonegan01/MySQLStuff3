@@ -30,6 +30,10 @@ import java.util.List;
 
 public class UserListActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
     private User user = new User();
 
@@ -38,6 +42,14 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
     private RequestQueue requestQueue;
     private List<otherUser> otherUsers;
     private RecyclerView recyclerView;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,6 +84,12 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +105,20 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
         User user = session.getUserDetails();
         otherUsers = new ArrayList<>();
         recyclerView = findViewById(R.id.userList);
-        jsoncall();
+        jsoncall(user);
 
         ConstraintLayout userListLayout = findViewById(R.id.userListLayout);
         userListLayout.setOnClickListener(this);
     }
 
-    private void jsoncall() {
+    /**
+     * Retrieves data from the database, stores data in an object of type "otherUser"
+     * assigns objects to an array of that type, then calls the setRVadapter method for this class.
+     * Code exists to ensure the current user is not visible in this list.
+     * @param user
+     */
+
+    private void jsoncall(final User user) {
         ArrayRequest = new JsonArrayRequest(userList_url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -128,17 +153,34 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<otherUser> lstGame) {
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param otherUserList
+     */
 
-        UserAdapter myAdapter = new UserAdapter(this,lstGame) ;
+    public void setRvadapter (List<otherUser> otherUserList) {
+
+        UserAdapter myAdapter = new UserAdapter(this,otherUserList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 
     }
 
+    /**
+     * Upon corresponding button being selected, Retrieves data from the database,
+     * stores data in an object of type "otherUser" assigns objects to an array of
+     * that type, then calls the setRVadapter method for this class.
+     * Only users that match the search criteria are included in the array
+     * if that data is filled, otherwise the method retrieves all data.
+     * Code exists to ensure the current user is not visible in this list.
+     * @param view
+     */
+
     @Override
     public void onClick(View view) {
         otherUsers.clear();
+        user = session.getUserDetails();
         final EditText searchData = findViewById(R.id.userListSearchBar);
         final String searchInfo = searchData.getText().toString();
         ArrayRequest = new JsonArrayRequest(userList_url, new Response.Listener<JSONArray>() {
@@ -148,14 +190,15 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                 if (searchInfo == null) {
                     for (int i = 0 ; i<response.length();i++) {
                         try {
-                            jsonObject = response.getJSONObject(i);
-                            otherUser otherUser = new otherUser();
-                            otherUser.setOtherUserId(jsonObject.getInt("user_id"));
-                            otherUser.setOtherUsername(jsonObject.getString("Username"));
-                            otherUser.setOtherBio(jsonObject.getString("Bio"));
-                            otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
-                            otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
-                            otherUsers.add(otherUser);
+                            if (jsonObject.getInt("user_id") != user.getUserId()) {
+                                otherUser otherUser = new otherUser();
+                                otherUser.setOtherUserId(jsonObject.getInt("user_id"));
+                                otherUser.setOtherUsername(jsonObject.getString("Username"));
+                                otherUser.setOtherBio(jsonObject.getString("Bio"));
+                                otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
+                                otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
+                                otherUsers.add(otherUser);
+                            }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -167,13 +210,15 @@ public class UserListActivity extends AppCompatActivity implements View.OnClickL
                         try {
                             jsonObject = response.getJSONObject(i);
                             if (jsonObject.getString("Username").equalsIgnoreCase(searchInfo) || jsonObject.getString("Username").toLowerCase().contains(searchInfo.toLowerCase())) {
-                                otherUser otherUser = new otherUser();
-                                otherUser.setOtherUserId(jsonObject.getInt("user_id"));
-                                otherUser.setOtherUsername(jsonObject.getString("Username"));
-                                otherUser.setOtherBio(jsonObject.getString("Bio"));
-                                otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
-                                otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
-                                otherUsers.add(otherUser);
+                                if (jsonObject.getInt("user_id") != user.getUserId()) {
+                                    otherUser otherUser = new otherUser();
+                                    otherUser.setOtherUserId(jsonObject.getInt("user_id"));
+                                    otherUser.setOtherUsername(jsonObject.getString("Username"));
+                                    otherUser.setOtherBio(jsonObject.getString("Bio"));
+                                    otherUser.setOtherProfilePic_url(jsonObject.getString("Avatar"));
+                                    otherUser.setOtherFollowers(jsonObject.getInt("Followers"));
+                                    otherUsers.add(otherUser);
+                                }
                             }
                         }
                         catch (JSONException e) {

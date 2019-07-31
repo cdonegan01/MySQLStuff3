@@ -37,6 +37,10 @@ import java.util.List;
 
 public class OtherUserActivity  extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
 
     private String reviewList_url = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
@@ -51,6 +55,14 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
     private RecyclerView recyclerView;
     private TextView otherFollowers;
     private TextView otherHelpful;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,6 +96,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
             return false;
         }
     };
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +170,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         jsoncall();
     }
 
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Review", then calls the
+     * setRVadapter method for this class. Only reviews that match the current "OtherUserID" are
+     * added to the array.
+     */
+
     private void jsoncall() {
         final int authorID = getIntent().getExtras().getInt("otherUserId");
         ArrayRequest = new JsonArrayRequest(reviewList_url, new Response.Listener<JSONArray>() {
@@ -192,6 +216,14 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         requestQueue = Volley.newRequestQueue(OtherUserActivity.this);
         requestQueue.add(ArrayRequest);
     }
+
+    /**
+     * Upon user tapping the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Review", then calls the setRVadapter method for this class.
+     * Only reviews that match the current "OtherUserID" are added to the array. Results are
+     * ordered from newest to oldest.
+     * @param view
+     */
 
     public void jsoncallOtherUserRecent(View view) {
         lstReviews.clear();
@@ -234,6 +266,14 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         requestQueue.add(ArrayRequest);
     }
 
+    /**
+     * Upon user tapping the corresponding button, retrieves data from the database and assigns
+     * that to an array of type "Review", then calls the setRVadapter method for this class.
+     * Only reviews that match the current "OtherUserID" are added to the array. Results are
+     * ordered from most likes to least likes.
+     * @param view
+     */
+
     public void jsoncallOtherUserPopular(View view) {
         lstReviews.clear();
         final int authorID = getIntent().getExtras().getInt("otherUserId");
@@ -275,12 +315,24 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Review> lstReviews) {
-        ReviewAdapter2 myAdapter = new ReviewAdapter2(this,lstReviews) ;
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param reviewList
+     */
+
+    public void setRvadapter (List<Review> reviewList) {
+        ReviewAdapter2 myAdapter = new ReviewAdapter2(this,reviewList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 
     }
+
+    /**
+     * Adds the user on this page to the current user's followed users
+     * @param currentUserID
+     * @param followedUserID
+     */
 
     public void followUser (int currentUserID, int followedUserID) {
         String currentPost = Integer.toString(currentUserID);
@@ -293,6 +345,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         View b = findViewById(R.id.textViewFollowed);
         b.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Sets the current number of users who have marked this user as helpful
+     * @param currentUserID
+     * @param followedUserID
+     */
 
     public void helpfulChecker (final int currentUserID, final int followedUserID) {
         ArrayRequest = new JsonArrayRequest(helpfulList_url, new Response.Listener<JSONArray>() {
@@ -332,6 +390,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * Marks the user on this page as helpful with the current user's id
+     * @param currentUserID
+     * @param followedUserID
+     */
+
     public void helpfulUser (int currentUserID, int followedUserID) {
         String currentPost = Integer.toString(currentUserID);
         String followPost = Integer.toString(followedUserID);
@@ -344,6 +408,12 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         View b = findViewById(R.id.helpfulUserTV);
         b.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Checks how many users currently follow this user
+     * @param currentUserID
+     * @param followedUserID
+     */
 
     public void followChecker (final int currentUserID, final int followedUserID) {
         ArrayRequest = new JsonArrayRequest(followList_url, new Response.Listener<JSONArray>() {

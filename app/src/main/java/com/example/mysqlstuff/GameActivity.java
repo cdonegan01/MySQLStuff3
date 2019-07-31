@@ -34,6 +34,10 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
 
     private String jsonURL1 = "http://cdonegan01.lampt.eeecs.qub.ac.uk/projectstuff/reviewList.php";
@@ -42,6 +46,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private RequestQueue requestQueue ;
     private List<Review> reviewList;
     private RecyclerView recyclerView;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,6 +87,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
     };
+
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +145,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         jsoncall();
     }
 
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Game", then calls the
+     * setRVadapter method for this class.
+     */
+
     private void jsoncall() {
         final int gameid = getIntent().getExtras().getInt("id");
         ArrayRequest = new JsonArrayRequest(jsonURL1, new Response.Listener<JSONArray>() {
@@ -167,6 +190,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue = Volley.newRequestQueue(GameActivity.this);
         requestQueue.add(ArrayRequest);
     }
+
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Review", then calls the
+     * setRVadapter method for this class. Games listed in order of newest to oldest.
+     * @param view
+     */
 
     public void jsoncallGameRecent(View view) {
         reviewList.clear();
@@ -210,6 +239,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue.add(ArrayRequest);
     }
 
+    /**
+     * Retrieves data from the database and assigns that to an array of type "Review", then calls the
+     * setRVadapter method for this class. Games listed in order of most likes to least likes.
+     * @param view
+     */
+
     public void jsoncallGamePopular(View view) {
         reviewList.clear();
         final int gameid = getIntent().getExtras().getInt("id");
@@ -252,8 +287,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue.add(ArrayRequest);
     }
 
-    public void setRvadapter (List<Review> lstReviews) {
-        ReviewAdapter1 myAdapter = new ReviewAdapter1(this,lstReviews) ;
+    /**
+     * Applies the corresponding layout file to the RecyclerView element
+     * with the corresponding adapter class.
+     * @param reviewList
+     */
+
+    public void setRvadapter (List<Review> reviewList) {
+        ReviewAdapter1 myAdapter = new ReviewAdapter1(this,reviewList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
 

@@ -28,6 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddReviewActivity extends AppCompatActivity {
+
+    /**
+     * Declaring Vars and Lists
+     */
+
     private Session session;
     private ProgressDialog pDialog;
 
@@ -41,6 +46,14 @@ public class AddReviewActivity extends AppCompatActivity {
     private EditText headingET;
     private int gameId;
     private Spinner spinner;
+
+    /**
+     * Instantiating Methods for Navigation Menu
+     * Each case represents one of the five options on the bottom menu, taking the user to the
+     * corresponding page. The exception to this is the nav_logout case, which first uses the
+     * session.logoutUser method to remove the user's information from the Shared Preferences
+     * before navigating them back to the Login Screen.
+     */
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,6 +88,11 @@ public class AddReviewActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Constructs the current page, assigning all View Vars and calling all methods needed
+     * to display data to the user
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +141,15 @@ public class AddReviewActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Posts a new review to the database.
+     * @param author
+     * @param review
+     * @param game
+     * @param rating
+     * @param heading
+     */
 
     public void postReview(String author, String review, String game, String rating, String heading) {
         displayLoader();
@@ -181,6 +208,10 @@ public class AddReviewActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
 
+    /**
+     * Displays a progress notification while the system is adding a review
+     */
+
     private void displayLoader() {
         pDialog = new ProgressDialog(AddReviewActivity.this);
         pDialog.setMessage("Adding Review...Please wait...");
@@ -189,6 +220,11 @@ public class AddReviewActivity extends AppCompatActivity {
         pDialog.show();
 
     }
+
+    /**
+     * Validates inputs and shows error if any
+     * @return
+     */
 
     private boolean validateInputs() {
         if (Constants.NULL.equals(review)) {
