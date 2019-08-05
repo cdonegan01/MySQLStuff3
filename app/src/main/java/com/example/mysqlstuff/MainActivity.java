@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                         pDialog.dismiss();
                         try {
                             //Check if user got logged in successfully
-                            if (response.getInt(Constants.MESSAGE) == 0) {
+                            if (response.getInt(Constants.STATUS) == 0) {
                                 session.loginUser(username, response.getInt("userId"), response.getString("bio"), response.getString("avatar"),
                                         response.getInt("followers"), response.getInt("type"));
                                 Intent i = new Intent(getApplicationContext(), ActivityFeed.class);
