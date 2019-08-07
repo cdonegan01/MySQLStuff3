@@ -3,22 +3,27 @@
 
     <item
         android:id="@+id/nav_activity"
+        android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Activity Feed"/>
+        android:title="Activity"/>
     <item
         android:id="@+id/nav_userPage"
+        android:enabled="true"
         android:icon="@drawable/ic_account_box_black_24dp"
-        android:title="My User Page" />
+        android:title="My Profile" />
     <item
         android:id="@+id/nav_gameSearch"
+        android:enabled="true"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Game Search" />
+        android:title="Games" />
     <item
         android:id="@+id/nav_userSearch"
+        android:enabled="true"
         android:icon="@drawable/ic_group_black_24dp"
-        android:title="User Search" />
+        android:title="Users" />
     <item
         android:id="@+id/nav_logout"
+        android:enabled="true"
         android:icon="@drawable/ic_exit_to_app_black_24dp"
         android:title="Log Out" />
 

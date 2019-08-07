@@ -29,6 +29,7 @@
         android:inputType="textMultiLine"
         android:singleLine="false"
         android:text=""
+        android:maxLength="120"
         app:layout_constraintBottom_toTopOf="@+id/textvie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
