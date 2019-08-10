@@ -63,7 +63,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
         myViewHolder.nameTextView.setText(otherUsers.get(i).getOtherUsername());
-        myViewHolder.followerTextView.setText(otherUsers.get(i).getOtherFollowers()+" Followers");
         Glide.with(context).load(otherUsers.get(i).getOtherProfilePic_url()).apply(options).into(myViewHolder.profilePicture);
 
         myViewHolder.view_container.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +98,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTextView;
-        TextView followerTextView;
         ImageView profilePicture;
         LinearLayout view_container;
 
@@ -108,7 +106,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
             view_container = itemView.findViewById(R.id.container);
             nameTextView = itemView.findViewById(R.id.nameTextView);
-            followerTextView = itemView.findViewById(R.id.commentTextView);
             profilePicture = itemView.findViewById(R.id.commentProfilePicture);
 
         }
