@@ -354,8 +354,8 @@ public class ReviewActivity extends AppCompatActivity {
         JSONObject request = new JSONObject();
         try {
             request.put(Constants.COMMENT, comment);
-            request.put(Constants.AUTHOR, author);
-            request.put(Constants.REVIEW, review);
+            request.put("User", author);
+            request.put("Review", review);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -365,18 +365,10 @@ public class ReviewActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
                         try {
-                            //Check if user got registered successfully
                             if (response.getInt(Constants.STATUS) == 0) {
-                                //Set the user session
                                 Toast.makeText(getApplicationContext(),
                                         "Comment Posted!", Toast.LENGTH_LONG).show();
                                 jsoncall();
-
-                            }else if(response.getInt(Constants.STATUS) == 1){
-                                //Display error message if username is already taken
-                                Toast.makeText(getApplicationContext(),
-                                        "Error!", Toast.LENGTH_LONG).show();
-
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         response.getString(Constants.MESSAGE), Toast.LENGTH_SHORT).show();

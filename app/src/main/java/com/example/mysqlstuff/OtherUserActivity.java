@@ -342,6 +342,7 @@ public class OtherUserActivity  extends AppCompatActivity implements View.OnClic
         new Backgroundworker(this).execute("userInteract", follow_url, currentPost, followPost);
         Toast.makeText(getApplicationContext(),
                 "You are now following this user!", Toast.LENGTH_SHORT).show();
+        followChecker(currentUserID, followedUserID);
         View a = findViewById(R.id.followButton);
         a.setVisibility(View.GONE);
         View b = findViewById(R.id.textViewFollowed);

@@ -62,7 +62,7 @@ public class ReviewAdapter3 extends RecyclerView.Adapter<ReviewAdapter3.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.feedNameAndGame.setText(reviews.get(i).getGameName()+" article by "+ reviews.get(i).getAuthorName());
+        myViewHolder.feedNameAndGame.setText(reviews.get(i).getGameName()+" review by "+ reviews.get(i).getAuthorName());
         myViewHolder.feedRating.setText(reviews.get(i).getRating()+"/10");
         myViewHolder.feedReview.setText(reviews.get(i).getHeading());
         Glide.with(context).load(reviews.get(i).getGamePictureUrl()).apply(options).into(myViewHolder.feedThumbnail);
